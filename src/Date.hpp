@@ -39,14 +39,14 @@ public:
 
     // Other functions
     friend ostream &operator<<(ostream &, Date &);
-    bool operator<(const Date &);
-    bool operator>(const Date &);
-    bool operator==(const Date &);
-    bool operator!=(const Date &);
-    Date operator+(const Date &);
-    Date operator-(const Date &);
-    Date operator+(const int &days);
-    Date operator-(const int &days);
+    bool operator<(Date &);
+    bool operator>(Date &);
+    bool operator==(Date &);
+    bool operator!=(Date &);
+    Date operator+(Date &);
+    Date operator-(Date &);
+    Date operator+(int &days);
+    Date operator-(int &days);
 };
 
 #endif

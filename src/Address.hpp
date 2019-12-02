@@ -37,8 +37,8 @@ public:
 
     // Other functions
     friend ostream &operator<<(ostream &, Address &);
-    bool operator==(const Address &o) { return this->city == o.city && this->state == o.state && this->street == o.street && this->zip == o.zip; }
-    bool operator!=(const Address &o) { return this->city != o.city || this->state != o.state || this->street != o.street || this->zip != o.zip; }
+    bool operator==(Address &o) { return this->city == o.city && this->state == o.state && this->street == o.street && this->zip == o.zip; }
+    bool operator!=(Address &o) { return this->city != o.city || this->state != o.state || this->street != o.street || this->zip != o.zip; }
 };
 
 ostream &operator<<(ostream &out, Address &a)

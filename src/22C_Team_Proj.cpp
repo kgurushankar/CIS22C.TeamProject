@@ -6,6 +6,8 @@
 #include "BinarySearchTree.h"
 #include "Hash.h"
 #include "Mail.hpp"
+#include "TrackingMail.hpp"
+#include "PriorityMail.hpp"
 
 using namespace std;
 

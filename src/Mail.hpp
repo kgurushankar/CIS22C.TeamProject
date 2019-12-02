@@ -8,16 +8,10 @@
 #include <iostream>
 #include "Address.hpp"
 #include "Date.hpp"
+#include "Type.hpp"
 
 using std::ostream;
 using std::string;
-
-enum Type
-{
-    priority,
-    normal,
-    economy
-};
 
 class Mail
 {

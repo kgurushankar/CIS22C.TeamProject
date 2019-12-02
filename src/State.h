@@ -2,16 +2,12 @@
 /** State class for storing state and perform data validation
  * author : Keshav Gurushankar
  */
-
 #ifndef STATE_H
 #define STATE_H
-
 #include <iostream>
-
 using std::string;
 using std::ostream;
-
-enum Option
+enum StateOption
 {
 	AL,
 	AK,
@@ -73,514 +69,388 @@ enum Option
 	WI,
 	WY
 };
-
 class State
 {
 private:
-	Option s;
-
+	StateOption s;
 public:
-	State(string s);
+	State(string str);
 	State() { s; }
 	string toString();
 	int toInt();
-	bool operator==(const State &o) { return this->s == o.s; }
-	bool operator!=(const State &o) { return this->s != o.s; }
+	bool operator==(State &o) { return this->s == o.s; }
+	bool operator!=(State &o) { return this->s != o.s; }
 	friend ostream &operator<<(ostream &, State &);
 };
-
 State::State(string str)
 {
 	if (str == "AL")
-	{
-		this->s = Option::AL;
-	}
+		this->s = StateOption::AL;
 	else if (str == "AK")
-	{
-		this->s = Option::AK;
-	}
+		this->s = StateOption::AK;
 	else if (str == "AS")
-	{
-		this->s = Option::AS;
-	}
+		this->s = StateOption::AS;
 	else if (str == "AZ")
-	{
-		this->s = Option::AZ;
-	}
+		this->s = StateOption::AZ;
 	else if (str == "AR")
-	{
-		this->s = Option::AR;
-	}
+		this->s = StateOption::AR;
 	else if (str == "CA")
-	{
-		this->s = Option::CA;
-	}
+		this->s = StateOption::CA;
 	else if (str == "CO")
-	{
-		this->s = Option::CO;
-	}
+		this->s = StateOption::CO;
 	else if (str == "CT")
-	{
-		this->s = Option::CT;
-	}
+		this->s = StateOption::CT;
 	else if (str == "DE")
-	{
-		this->s = Option::DE;
-	}
+		this->s = StateOption::DE;
 	else if (str == "DC")
-	{
-		this->s = Option::DC;
-	}
+		this->s = StateOption::DC;
 	else if (str == "FL")
-	{
-		this->s = Option::FL;
-	}
+		this->s = StateOption::FL;
 	else if (str == "GA")
-	{
-		this->s = Option::GA;
-	}
+		this->s = StateOption::GA;
 	else if (str == "GU")
-	{
-		this->s = Option::GU;
-	}
+		this->s = StateOption::GU;
 	else if (str == "HI")
-	{
-		this->s = Option::HI;
-	}
+		this->s = StateOption::HI;
 	else if (str == "ID")
-	{
-		this->s = Option::ID;
-	}
+		this->s = StateOption::ID;
 	else if (str == "IL")
-	{
-		this->s = Option::IL;
-	}
+		this->s = StateOption::IL;
 	else if (str == "IN")
-	{
-		this->s = Option::IN;
-	}
+		this->s = StateOption::IN;
 	else if (str == "IA")
-	{
-		this->s = Option::IA;
-	}
+		this->s = StateOption::IA;
 	else if (str == "KS")
-	{
-		this->s = Option::KS;
-	}
+		this->s = StateOption::KS;
 	else if (str == "KY")
-	{
-		this->s = Option::KY;
-	}
+		this->s = StateOption::KY;
 	else if (str == "LA")
-	{
-		this->s = Option::LA;
-	}
+		this->s = StateOption::LA;
 	else if (str == "ME")
-	{
-		this->s = Option::ME;
-	}
+		this->s = StateOption::ME;
 	else if (str == "MD")
-	{
-		this->s = Option::MD;
-	}
+		this->s = StateOption::MD;
 	else if (str == "MH")
-	{
-		this->s = Option::MH;
-	}
+		this->s = StateOption::MH;
 	else if (str == "MA")
-	{
-		this->s = Option::MA;
-	}
+		this->s = StateOption::MA;
 	else if (str == "MI")
-	{
-		this->s = Option::MI;
-	}
+		this->s = StateOption::MI;
 	else if (str == "FM")
-	{
-		this->s = Option::FM;
-	}
+		this->s = StateOption::FM;
 	else if (str == "MN")
-	{
-		this->s = Option::MN;
-	}
+		this->s = StateOption::MN;
 	else if (str == "MS")
-	{
-		this->s = Option::MS;
-	}
+		this->s = StateOption::MS;
 	else if (str == "MO")
-	{
-		this->s = Option::MO;
-	}
+		this->s = StateOption::MO;
 	else if (str == "MT")
-	{
-		this->s = Option::MT;
-	}
+		this->s = StateOption::MT;
 	else if (str == "NE")
-	{
-		this->s = Option::NE;
-	}
+		this->s = StateOption::NE;
 	else if (str == "NV")
-	{
-		this->s = Option::NV;
-	}
+		this->s = StateOption::NV;
 	else if (str == "NH")
-	{
-		this->s = Option::NH;
-	}
+		this->s = StateOption::NH;
 	else if (str == "NJ")
-	{
-		this->s = Option::NJ;
-	}
+		this->s = StateOption::NJ;
 	else if (str == "NM")
-	{
-		this->s = Option::NM;
-	}
+		this->s = StateOption::NM;
 	else if (str == "NY")
-	{
-		this->s = Option::NY;
-	}
+		this->s = StateOption::NY;
 	else if (str == "NC")
-	{
-		this->s = Option::NC;
-	}
+		this->s = StateOption::NC;
 	else if (str == "ND")
-	{
-		this->s = Option::ND;
-	}
+		this->s = StateOption::ND;
 	else if (str == "MP")
-	{
-		this->s = Option::MP;
-	}
+		this->s = StateOption::MP;
 	else if (str == "OH")
-	{
-		this->s = Option::OH;
-	}
+		this->s = StateOption::OH;
 	else if (str == "OK")
-	{
-		this->s = Option::OK;
-	}
+		this->s = StateOption::OK;
 	else if (str == "OR")
-	{
-		this->s = Option::OR;
-	}
+		this->s = StateOption::OR;
 	else if (str == "PW")
-	{
-		this->s = Option::PW;
-	}
+		this->s = StateOption::PW;
 	else if (str == "PA")
-	{
-		this->s = Option::PA;
-	}
+		this->s = StateOption::PA;
 	else if (str == "PR")
-	{
-		this->s = Option::PR;
-	}
+		this->s = StateOption::PR;
 	else if (str == "RI")
-	{
-		this->s = Option::RI;
-	}
+		this->s = StateOption::RI;
 	else if (str == "SC")
-	{
-		this->s = Option::SC;
-	}
+		this->s = StateOption::SC;
 	else if (str == "SD")
-	{
-		this->s = Option::SD;
-	}
+		this->s = StateOption::SD;
 	else if (str == "TN")
-	{
-		this->s = Option::TN;
-	}
+		this->s = StateOption::TN;
 	else if (str == "TX")
-	{
-		this->s = Option::TX;
-	}
+		this->s = StateOption::TX;
 	else if (str == "UT")
-	{
-		this->s = Option::UT;
-	}
+		this->s = StateOption::UT;
 	else if (str == "VT")
-	{
-		this->s = Option::VT;
-	}
+		this->s = StateOption::VT;
 	else if (str == "VA")
-	{
-		this->s = Option::VA;
-	}
+		this->s = StateOption::VA;
 	else if (str == "VI")
-	{
-		this->s = Option::VI;
-	}
+		this->s = StateOption::VI;
 	else if (str == "WA")
-	{
-		this->s = Option::WA;
-	}
+		this->s = StateOption::WA;
 	else if (str == "WV")
-	{
-		this->s = Option::WV;
-	}
+		this->s = StateOption::WV;
 	else if (str == "WI")
-	{
-		this->s = Option::WI;
-	}
+		this->s = StateOption::WI;
 	else if (str == "WY")
-	{
-		this->s = Option::WY;
-	}
+		this->s = StateOption::WY;
 	else
-	{
 		throw std::invalid_argument(str + " is not a valid state");
-	}
 }
-
 string State::toString()
 {
-	if (this->s == Option::AL)
+	if (this->s == StateOption::AL)
 		return "AL";
-	else if (this->s == Option::AK)
+	else if (this->s == StateOption::AK)
 		return "AK";
-	else if (this->s == Option::AS)
+	else if (this->s == StateOption::AS)
 		return "AS";
-	else if (this->s == Option::AZ)
+	else if (this->s == StateOption::AZ)
 		return "AZ";
-	else if (this->s == Option::AR)
+	else if (this->s == StateOption::AR)
 		return "AR";
-	else if (this->s == Option::CA)
+	else if (this->s == StateOption::CA)
 		return "CA";
-	else if (this->s == Option::CO)
+	else if (this->s == StateOption::CO)
 		return "CO";
-	else if (this->s == Option::CT)
+	else if (this->s == StateOption::CT)
 		return "CT";
-	else if (this->s == Option::DE)
+	else if (this->s == StateOption::DE)
 		return "DE";
-	else if (this->s == Option::DC)
+	else if (this->s == StateOption::DC)
 		return "DC";
-	else if (this->s == Option::FL)
+	else if (this->s == StateOption::FL)
 		return "FL";
-	else if (this->s == Option::GA)
+	else if (this->s == StateOption::GA)
 		return "GA";
-	else if (this->s == Option::GU)
+	else if (this->s == StateOption::GU)
 		return "GU";
-	else if (this->s == Option::HI)
+	else if (this->s == StateOption::HI)
 		return "HI";
-	else if (this->s == Option::ID)
+	else if (this->s == StateOption::ID)
 		return "ID";
-	else if (this->s == Option::IL)
+	else if (this->s == StateOption::IL)
 		return "IL";
-	else if (this->s == Option::IN)
+	else if (this->s == StateOption::IN)
 		return "IN";
-	else if (this->s == Option::IA)
+	else if (this->s == StateOption::IA)
 		return "IA";
-	else if (this->s == Option::KS)
+	else if (this->s == StateOption::KS)
 		return "KS";
-	else if (this->s == Option::KY)
+	else if (this->s == StateOption::KY)
 		return "KY";
-	else if (this->s == Option::LA)
+	else if (this->s == StateOption::LA)
 		return "LA";
-	else if (this->s == Option::ME)
+	else if (this->s == StateOption::ME)
 		return "ME";
-	else if (this->s == Option::MD)
+	else if (this->s == StateOption::MD)
 		return "MD";
-	else if (this->s == Option::MH)
+	else if (this->s == StateOption::MH)
 		return "MH";
-	else if (this->s == Option::MA)
+	else if (this->s == StateOption::MA)
 		return "MA";
-	else if (this->s == Option::MI)
+	else if (this->s == StateOption::MI)
 		return "MI";
-	else if (this->s == Option::FM)
+	else if (this->s == StateOption::FM)
 		return "FM";
-	else if (this->s == Option::MN)
+	else if (this->s == StateOption::MN)
 		return "MN";
-	else if (this->s == Option::MS)
+	else if (this->s == StateOption::MS)
 		return "MS";
-	else if (this->s == Option::MO)
+	else if (this->s == StateOption::MO)
 		return "MO";
-	else if (this->s == Option::MT)
+	else if (this->s == StateOption::MT)
 		return "MT";
-	else if (this->s == Option::NE)
+	else if (this->s == StateOption::NE)
 		return "NE";
-	else if (this->s == Option::NV)
+	else if (this->s == StateOption::NV)
 		return "NV";
-	else if (this->s == Option::NH)
+	else if (this->s == StateOption::NH)
 		return "NH";
-	else if (this->s == Option::NJ)
+	else if (this->s == StateOption::NJ)
 		return "NJ";
-	else if (this->s == Option::NM)
+	else if (this->s == StateOption::NM)
 		return "NM";
-	else if (this->s == Option::NY)
+	else if (this->s == StateOption::NY)
 		return "NY";
-	else if (this->s == Option::NC)
+	else if (this->s == StateOption::NC)
 		return "NC";
-	else if (this->s == Option::ND)
+	else if (this->s == StateOption::ND)
 		return "ND";
-	else if (this->s == Option::MP)
+	else if (this->s == StateOption::MP)
 		return "MP";
-	else if (this->s == Option::OH)
+	else if (this->s == StateOption::OH)
 		return "OH";
-	else if (this->s == Option::OK)
+	else if (this->s == StateOption::OK)
 		return "OK";
-	else if (this->s == Option::OR)
+	else if (this->s == StateOption::OR)
 		return "OR";
-	else if (this->s == Option::PW)
+	else if (this->s == StateOption::PW)
 		return "PW";
-	else if (this->s == Option::PA)
+	else if (this->s == StateOption::PA)
 		return "PA";
-	else if (this->s == Option::PR)
+	else if (this->s == StateOption::PR)
 		return "PR";
-	else if (this->s == Option::RI)
+	else if (this->s == StateOption::RI)
 		return "RI";
-	else if (this->s == Option::SC)
+	else if (this->s == StateOption::SC)
 		return "SC";
-	else if (this->s == Option::SD)
+	else if (this->s == StateOption::SD)
 		return "SD";
-	else if (this->s == Option::TN)
+	else if (this->s == StateOption::TN)
 		return "TN";
-	else if (this->s == Option::TX)
+	else if (this->s == StateOption::TX)
 		return "TX";
-	else if (this->s == Option::UT)
+	else if (this->s == StateOption::UT)
 		return "UT";
-	else if (this->s == Option::VT)
+	else if (this->s == StateOption::VT)
 		return "VT";
-	else if (this->s == Option::VA)
+	else if (this->s == StateOption::VA)
 		return "VA";
-	else if (this->s == Option::VI)
+	else if (this->s == StateOption::VI)
 		return "VI";
-	else if (this->s == Option::WA)
+	else if (this->s == StateOption::WA)
 		return "WA";
-	else if (this->s == Option::WV)
+	else if (this->s == StateOption::WV)
 		return "WV";
-	else if (this->s == Option::WI)
+	else if (this->s == StateOption::WI)
 		return "WI";
-	else if (this->s == Option::WY)
+	else if (this->s == StateOption::WY)
 		return "WY";
 	else
 		return "";
 }
-
 int State::toInt()
 {
-	if (this->s == Option::AL)
+	if (this->s == StateOption::AL)
 		return 0;
-	else if (this->s == Option::AK)
+	else if (this->s == StateOption::AK)
 		return 1;
-	else if (this->s == Option::AS)
+	else if (this->s == StateOption::AS)
 		return 2;
-	else if (this->s == Option::AZ)
+	else if (this->s == StateOption::AZ)
 		return 3;
-	else if (this->s == Option::AR)
+	else if (this->s == StateOption::AR)
 		return 4;
-	else if (this->s == Option::CA)
+	else if (this->s == StateOption::CA)
 		return 5;
-	else if (this->s == Option::CO)
+	else if (this->s == StateOption::CO)
 		return 6;
-	else if (this->s == Option::CT)
+	else if (this->s == StateOption::CT)
 		return 7;
-	else if (this->s == Option::DE)
+	else if (this->s == StateOption::DE)
 		return 8;
-	else if (this->s == Option::DC)
+	else if (this->s == StateOption::DC)
 		return 9;
-	else if (this->s == Option::FL)
+	else if (this->s == StateOption::FL)
 		return 10;
-	else if (this->s == Option::GA)
+	else if (this->s == StateOption::GA)
 		return 11;
-	else if (this->s == Option::GU)
+	else if (this->s == StateOption::GU)
 		return 12;
-	else if (this->s == Option::HI)
+	else if (this->s == StateOption::HI)
 		return 13;
-	else if (this->s == Option::ID)
+	else if (this->s == StateOption::ID)
 		return 14;
-	else if (this->s == Option::IL)
+	else if (this->s == StateOption::IL)
 		return 15;
-	else if (this->s == Option::IN)
+	else if (this->s == StateOption::IN)
 		return 16;
-	else if (this->s == Option::IA)
+	else if (this->s == StateOption::IA)
 		return 17;
-	else if (this->s == Option::KS)
+	else if (this->s == StateOption::KS)
 		return 18;
-	else if (this->s == Option::KY)
+	else if (this->s == StateOption::KY)
 		return 19;
-	else if (this->s == Option::LA)
+	else if (this->s == StateOption::LA)
 		return 20;
-	else if (this->s == Option::ME)
+	else if (this->s == StateOption::ME)
 		return 21;
-	else if (this->s == Option::MD)
+	else if (this->s == StateOption::MD)
 		return 22;
-	else if (this->s == Option::MH)
+	else if (this->s == StateOption::MH)
 		return 23;
-	else if (this->s == Option::MA)
+	else if (this->s == StateOption::MA)
 		return 24;
-	else if (this->s == Option::MI)
+	else if (this->s == StateOption::MI)
 		return 25;
-	else if (this->s == Option::FM)
+	else if (this->s == StateOption::FM)
 		return 26;
-	else if (this->s == Option::MN)
+	else if (this->s == StateOption::MN)
 		return 27;
-	else if (this->s == Option::MS)
+	else if (this->s == StateOption::MS)
 		return 28;
-	else if (this->s == Option::MO)
+	else if (this->s == StateOption::MO)
 		return 29;
-	else if (this->s == Option::MT)
+	else if (this->s == StateOption::MT)
 		return 30;
-	else if (this->s == Option::NE)
+	else if (this->s == StateOption::NE)
 		return 31;
-	else if (this->s == Option::NV)
+	else if (this->s == StateOption::NV)
 		return 32;
-	else if (this->s == Option::NH)
+	else if (this->s == StateOption::NH)
 		return 33;
-	else if (this->s == Option::NJ)
+	else if (this->s == StateOption::NJ)
 		return 34;
-	else if (this->s == Option::NM)
+	else if (this->s == StateOption::NM)
 		return 35;
-	else if (this->s == Option::NY)
+	else if (this->s == StateOption::NY)
 		return 36;
-	else if (this->s == Option::NC)
+	else if (this->s == StateOption::NC)
 		return 37;
-	else if (this->s == Option::ND)
+	else if (this->s == StateOption::ND)
 		return 38;
-	else if (this->s == Option::MP)
+	else if (this->s == StateOption::MP)
 		return 39;
-	else if (this->s == Option::OH)
+	else if (this->s == StateOption::OH)
 		return 40;
-	else if (this->s == Option::OK)
+	else if (this->s == StateOption::OK)
 		return 41;
-	else if (this->s == Option::OR)
+	else if (this->s == StateOption::OR)
 		return 42;
-	else if (this->s == Option::PW)
+	else if (this->s == StateOption::PW)
 		return 43;
-	else if (this->s == Option::PA)
+	else if (this->s == StateOption::PA)
 		return 44;
-	else if (this->s == Option::PR)
+	else if (this->s == StateOption::PR)
 		return 45;
-	else if (this->s == Option::RI)
+	else if (this->s == StateOption::RI)
 		return 46;
-	else if (this->s == Option::SC)
+	else if (this->s == StateOption::SC)
 		return 47;
-	else if (this->s == Option::SD)
+	else if (this->s == StateOption::SD)
 		return 48;
-	else if (this->s == Option::TN)
+	else if (this->s == StateOption::TN)
 		return 49;
-	else if (this->s == Option::TX)
+	else if (this->s == StateOption::TX)
 		return 50;
-	else if (this->s == Option::UT)
+	else if (this->s == StateOption::UT)
 		return 51;
-	else if (this->s == Option::VT)
+	else if (this->s == StateOption::VT)
 		return 52;
-	else if (this->s == Option::VA)
+	else if (this->s == StateOption::VA)
 		return 53;
-	else if (this->s == Option::VI)
+	else if (this->s == StateOption::VI)
 		return 54;
-	else if (this->s == Option::WA)
+	else if (this->s == StateOption::WA)
 		return 55;
-	else if (this->s == Option::WV)
+	else if (this->s == StateOption::WV)
 		return 56;
-	else if (this->s == Option::WI)
+	else if (this->s == StateOption::WI)
 		return 57;
-	else if (this->s == Option::WY)
+	else if (this->s == StateOption::WY)
 		return 58;
 	else 
 		return -1;
 }
-
 ostream &operator<<(ostream &out, State &a)
 {
 	out << a.toString();

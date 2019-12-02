@@ -24,10 +24,10 @@ public:
 	// Other functions
 	friend ostream &operator<<(ostream &, Mail &);
 	//Comparing tracking number
-	bool operator<(const TrackingMail &o) { return (this->m.getTrackingNumber() < o.m.getTrackingNumber()); }
-	bool operator>(const TrackingMail &o) { return (this->m.getTrackingNumber() > o.m.getTrackingNumber()); }
-	bool operator==(const TrackingMail &o) { return (this->m.getTrackingNumber() == o.m.getTrackingNumber()); }
-	bool operator!=(const TrackingMail &o) { return (this->m.getTrackingNumber() != o.m.getTrackingNumber()); }
+	bool operator<(TrackingMail &o) { return (this->m.getTrackingNumber() < o.m.getTrackingNumber()); }
+	bool operator>(TrackingMail &o) { return (this->m.getTrackingNumber() > o.m.getTrackingNumber()); }
+	bool operator==(TrackingMail &o) { return (this->m.getTrackingNumber() == o.m.getTrackingNumber()); }
+	bool operator!=(TrackingMail &o) { return (this->m.getTrackingNumber() != o.m.getTrackingNumber()); }
 };
 ostream &operator<<(ostream &out, TrackingMail &m)
 {
