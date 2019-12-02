@@ -18,8 +18,13 @@ private:
     int year;
 
 public:
-    Date();
-    Date(int, int, int);
+    Date()
+    {
+        day = -1;
+        month = -1;
+        year = -1;
+    }
+    Date(int d, int m, int y);
     Date(string);
 
     // Setters
@@ -40,8 +45,8 @@ public:
     bool operator!=(const Date &);
     Date operator+(const Date &);
     Date operator-(const Date &);
-    Date operator++();
-    Date operator--();
+    Date operator+(const int &days);
+    Date operator-(const int &days);
 };
 
 #endif

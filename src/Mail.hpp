@@ -18,13 +18,6 @@ enum Type
     normal,
     economy
 };
-enum Status
-{
-    sent,
-    waiting,
-    on_time,
-    late
-};
 
 class Mail
 {
@@ -40,42 +33,44 @@ private:
     Address to;
     Date sent;
     Type type;
-    Status status;
+    int trackingNumber;
 
 public:
-    enum Type
+    Mail(int, Address, Address, Date, Type);
+    Mail()
     {
-        priority,
-        normal,
-        economy
-    };
-    enum Status
-    {
-        sent,
-        waiting,
-        on_time,
-        late
-    };
-    Mail(Address, Address, Date, Type);
+        from = Address();
+        to = Address();
+        sent = Date();
+        trackingNumber = -1;
+    }
 
     // Setters
-    bool setType(Type);
-    bool setStatus(Status);
+    void setType(Type t) { this->type = t; };
 
     // Getters
+    int getTrackingNumber() const { return trackingNumber; }
     Address getFrom() const { return from; }
     Address getTo() const { return to; }
     Date getSent() const { return sent; }
-    Type getType() const { return type; }
-    Status getStatus() const { return status; }
+    Type getType() const { return this->type; }
+    int comparePriority(const Mail &);
 
     // Other functions
     friend ostream &operator<<(ostream &, Mail &);
-    //Comparing priority
-    bool operator<(const Mail &);
-    bool operator>(const Mail &);
-    bool operator==(const Mail &);
-    bool operator!=(const Mail &);
 };
+
+ostream &operator<<(ostream &out, Mail &m)
+{
+    out << "Tracking Number:" << std::endl
+        << m.trackingNumber << std::endl
+        << "From:" << std::endl
+        << m.from << std::endl
+        << "To:" << std::endl
+        << m.to << std::endl
+        << "Sent On:" << std::endl
+        << m.sent << std::endl;
+    return out;
+}
 
 #endif

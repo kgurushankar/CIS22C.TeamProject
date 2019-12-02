@@ -1,0 +1,26 @@
+Mail ID	From Address ID	To Address ID	Date Sent	Type
+0	27	20	10/0/2019	normal
+1	2	21	9/4/2019	normal
+2	2	40	10/0/2019	normal
+3	46	8	10/6/2019	normal
+4	26	17	8/6/2019	priority
+5	33	37	9/6/2019	economy
+6	46	49	9/3/2019	economy
+7	46	9	8/4/2019	normal
+8	28	0	9/5/2019	priority
+9	7	11	10/3/2019	economy
+10	9	45	9/5/2019	normal
+11	5	49	10/2/2019	priority
+12	49	42	9/0/2019	economy
+13	21	44	9/0/2019	normal
+14	31	2	10/1/2019	economy
+15	27	40	10/2/2019	economy
+16	22	38	10/0/2019	priority
+17	9	27	9/5/2019	normal
+18	36	32	10/1/2019	economy
+19	21	36	10/0/2019	normal
+20	38	46	9/2/2019	normal
+21	7	25	9/3/2019	economy
+22	9	29	10/2/2019	priority
+23	47	20	10/0/2019	priority
+24	24	38	8/3/2019	economy

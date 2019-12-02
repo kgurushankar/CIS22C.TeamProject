@@ -6,72 +6,10 @@
 #define ADDRESS_H
 
 #include <iostream>
+#include "State.h"
 
 using std::ostream;
 using std::string;
-
-enum State
-{
-    AL,
-    AK,
-    AS,
-    AZ,
-    AR,
-    CA,
-    CO,
-    CT,
-    DE,
-    DC,
-    FL,
-    GA,
-    GU,
-    HI,
-    ID,
-    IL,
-    IN,
-    IA,
-    KS,
-    KY,
-    LA,
-    ME,
-    MD,
-    MH,
-    MA,
-    MI,
-    FM,
-    MN,
-    MS,
-    MO,
-    MT,
-    NE,
-    NV,
-    NH,
-    NJ,
-    NM,
-    NY,
-    NC,
-    ND,
-    MP,
-    OH,
-    OK,
-    OR,
-    PW,
-    PA,
-    PR,
-    RI,
-    SC,
-    SD,
-    TN,
-    TX,
-    UT,
-    VT,
-    VA,
-    VI,
-    WA,
-    WV,
-    WI,
-    WY
-};
 
 class Address
 {
@@ -83,6 +21,13 @@ private:
 
 public:
     Address(string, string, State, int);
+    Address()
+    {
+        street = "";
+        city = "";
+        state = State();
+        zip = 0;
+    }
 
     // Getters
     string getStreet() const { return street; }
@@ -91,9 +36,28 @@ public:
     int getZip() const { return zip; }
 
     // Other functions
-    friend ostream &operator<<(ostream &, Date &);
-    bool operator==(const Date &);
-    bool operator!=(const Date &);
+    friend ostream &operator<<(ostream &, Address &);
+    bool operator==(const Address &o) { return this->city == o.city && this->state == o.state && this->street == o.street && this->zip == o.zip; }
+    bool operator!=(const Address &o) { return this->city != o.city || this->state != o.state || this->street != o.street || this->zip != o.zip; }
 };
 
+ostream &operator<<(ostream &out, Address &a)
+{
+    out << a.street << std::endl
+        << a.city << " " << a.state << " " << a.zip;
+    return out;
+}
 #endif
+
+// AL: tracking_number, tracking_number.....
+// AK: tracking_number, tracking_number.....
+// AS: tracking_number, tracking_number.....
+// AZ: tracking_number, tracking_number.....
+// AR: tracking_number, tracking_number.....
+// CA: tracking_number, tracking_number.....
+// CO: tracking_number, tracking_number.....
+// CT: tracking_number, tracking_number.....
+// DE: tracking_number, tracking_number.....
+// DC: tracking_number, tracking_number.....
+// FL: tracking_number, tracking_number.....
+// GA: tracking_number, tracking_number.....
