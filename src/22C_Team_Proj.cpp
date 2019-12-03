@@ -78,11 +78,33 @@ int main()
         }
         else if (choice == "SEND")
         {
-            trackingTree.
+            int n = stoi(options);
+            Mail m;
+            PriorityMail pm;
+            TrackingMail tm;
+            for (int i = 0; i < n; i++)
+            {
+                priorityTree->getMax(pm);
+                m = pm.getMail();
+                tm = TrackingMail(m);
+                priorityTree->remove(pm);
+                trackingTree->remove(tm);
+                hash.deleteHash(m);
+                cout << m.getTrackingNumber() << endl;
+            }
         }
         else if (choice == "REMOVE")
         {
             int num = stoi(options);
+            TrackingMail tm = TrackingMail(Mail(num, Address(), Address(), Date(), Type()));
+            TrackingMail target;
+            trackingTree->getEntry(tm, target);
+            Mail m = target.getMail();
+            PriorityMail pm = PriorityMail(m);
+            priorityTree->remove(pm);
+            trackingTree->remove(tm);
+            hash.deleteHash(m);
+            cout << m;
         }
         else if (choice == "INSERT")
         {

@@ -34,9 +34,9 @@ public:
     // find a target node
     bool getEntry(const ItemType &target, ItemType &returnedItem) const;
     // get max
-    bool getMax(const ItemType &anEntry);
+    bool getMax(ItemType &anEntry);
     //get min
-    bool getMin(const ItemType &anEntry);
+    bool getMin(ItemType &anEntry);
 };
 
 ///////////////////////// public function definitions ///////////////////////////
@@ -200,7 +200,7 @@ BinaryNode<ItemType> *BinarySearchTree<ItemType>::removeLeftmostNode(BinaryNode<
 
 //Implementation to find max
 template <class ItemType>
-bool BinarySearchTree<ItemType>::getMax(const ItemType &anEntry)
+bool BinarySearchTree<ItemType>::getMax(ItemType &anEntry)
 {
     BinaryNode<ItemType> *nodePtr = this->rootPtr;
     while (nodePtr->getRightPtr() != 0)
@@ -213,7 +213,7 @@ bool BinarySearchTree<ItemType>::getMax(const ItemType &anEntry)
 
 //Implementation to find min
 template <class ItemType>
-bool BinarySearchTree<ItemType>::getMin(const ItemType &anEntry)
+bool BinarySearchTree<ItemType>::getMin(ItemType &anEntry)
 {
     BinaryNode<ItemType> *nodePtr = this->rootPtr;
     while (nodePtr->getLeftPtr() != 0)

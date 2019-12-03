@@ -125,7 +125,7 @@ bool LinkedList<ItemType>::deleteNode(ItemType target)
 	pPre = head;
 	pCur = head->getNext();
 	pDel = new ListNode<ItemType>;
-	pDel->setCity(target);
+	pDel->setItem(target);
 	while (pCur != head && pCur->getItem() < target)
 	{
 		pPre = pCur;

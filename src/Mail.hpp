@@ -61,6 +61,7 @@ public:
     friend ostream &operator<<(ostream &, Mail &);
     bool operator<(const Mail &o) { return this->trackingNumber < o.trackingNumber; }
     bool operator>(const Mail &o) { return this->trackingNumber > o.trackingNumber; }
+    bool operator==(const Mail &o) { return this->trackingNumber == o.trackingNumber; }
 };
 
 ostream &operator<<(ostream &out, Mail &m)
