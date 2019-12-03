@@ -2,25 +2,26 @@
 
 #ifndef HASH_H
 #define HASH_H
-#include<iostream>
-#include <list> 
+#include <iostream>
+#include <list>
 #include "LinkedList.h"
 #include <cmath>
 #include <string>
 #define LOAD_FACTOR 75
 using namespace std;
-template<class ItemType>
+template <class ItemType>
 class HashTable
 {
 private:
-	LinkedList<ItemType>* hashList;
+	LinkedList<ItemType> *hashList;
 	int arraySize;
 	int getHashIndex(string input);
 	int calcPrime(int size);
 	void resize();
+
 public:
 	//Constructor
-	HashTable(int s)
+	HashTable(int s = 127)
 	{
 		arraySize = calcPrime(s);
 		hashList = new LinkedList<ItemType>[arraySize];
@@ -30,28 +31,31 @@ public:
 	//
 	int getSize() { return arraySize; }
 	bool isEmpty() { return arraySize == 0; }
-	void insertHash(ItemType& item);
-	bool deleteHash(ItemType& target);
-	bool searchHash(ItemType& target, ItemType& returnedItem);
-	void printHash(void visit(ItemType&));
+	void insertHash(ItemType &item);
+	bool deleteHash(ItemType &target);
+	bool searchHash(ItemType &target, ItemType &returnedItem);
+	void printHash(void visit(ItemType &));
 
 	// The statistics functions
 	double calcLoadFactor();
 	int collisions();
 	int amountLinkedLists();
-	void longestLinkedList(void visit(ItemType&));
+	void longestLinkedList(void visit(ItemType &));
 	double avgNumNodes();
 };
 template <class ItemType>
 void HashTable<ItemType>::resize()
 {
-	HashTable<ItemType> newHashTable=HashTable<ItemType>(arraySize * 2);
+	HashTable<ItemType> newHashTable = HashTable<ItemType>(arraySize * 2 + 1); //keep it odd to try to avoid multiples of 2
 
-	for (int i = 0; i < arraySize; i++) {
-		for (int j = 0; j < hashList[i].getCount(); j++) {
+	for (int i = 0; i < arraySize; i++)
+	{
+		for (int j = 0; j < hashList[i].getCount(); j++)
+		{
 			ItemType item;
 
-			if (hashList[i].getEntry(j, item)) {
+			if (hashList[i].getEntry(j, item))
+			{
 				newHashTable.insertHash(item);
 			}
 		}
@@ -63,37 +67,43 @@ void HashTable<ItemType>::resize()
 	arraySize = newHashTable.arraySize;
 	hashList = newHashTable.hashList;
 
-
 	newHashTable.arraySize = 0;
 	newHashTable.hashList = NULL;
 	// otherwise desctructor of newHashTable will destroy rehashed data
 }
-template< class ItemType>
+template <class ItemType>
 int HashTable<ItemType>::calcPrime(int size)
 {
-	while (true) {
+	while (true)
+	{
 		bool isPrime = false;
 
-		if (size < 2) {
+		if (size < 2)
+		{
 			isPrime = false;
 		}
-		else {
-			for (int i = 2; true; ++i) {
+		else
+		{
+			for (int i = 2; true; ++i)
+			{
 				int q = size / i;
 
-				if (q < i) {
+				if (q < i)
+				{
 					isPrime = true;
 					break;
 				}
 
-				if (size == q * i) {
+				if (size == q * i)
+				{
 					isPrime = false;
 					break;
 				}
 			}
 		}
 
-		if (isPrime) {
+		if (isPrime)
+		{
 			break;
 		}
 
@@ -103,7 +113,7 @@ int HashTable<ItemType>::calcPrime(int size)
 	return size;
 }
 
-template<class ItemType>
+template <class ItemType>
 int HashTable<ItemType>::getHashIndex(string input)
 {
 	int index = 0;
@@ -121,8 +131,8 @@ int HashTable<ItemType>::getHashIndex(string input)
 	return index;
 }
 
-template<class ItemType>
-void HashTable<ItemType>::insertHash(ItemType& item)
+template <class ItemType>
+void HashTable<ItemType>::insertHash(ItemType &item)
 {
 	int hashKey = getHashIndex(item.hashString());
 	hashList[hashKey].insertNode(item);
@@ -132,22 +142,22 @@ void HashTable<ItemType>::insertHash(ItemType& item)
 	}
 }
 
-template<class ItemType>
-bool HashTable<ItemType>::deleteHash(ItemType& target)
+template <class ItemType>
+bool HashTable<ItemType>::deleteHash(ItemType &target)
 {
 	int key = getHashIndex(target.hashString());
 	return hashList[key].deleteNode(target);
 }
 
-template<class ItemType>
-bool HashTable<ItemType>::searchHash(ItemType& target, ItemType& returnItem)
+template <class ItemType>
+bool HashTable<ItemType>::searchHash(ItemType &target, ItemType &returnItem)
 {
 	int key = getHashIndex(target.hashString());
 	return hashList[key].searchList(target, returnItem);
 }
 
-template<class ItemType>
-void HashTable<ItemType>::printHash(void visit(ItemType&))
+template <class ItemType>
+void HashTable<ItemType>::printHash(void visit(ItemType &))
 {
 	for (int i = 0; i < arraySize; i++)
 	{
@@ -160,13 +170,13 @@ void HashTable<ItemType>::printHash(void visit(ItemType&))
 	}
 }
 
-template<class ItemType>
+template <class ItemType>
 HashTable<ItemType>::~HashTable()
 {
 	for (int i = 0; i < arraySize; i++)
 	{
 		cout << "DEBUG - Destructor: Now deleting index " << i << endl;
-		delete (hashList+i);
+		delete (hashList + i);
 	}
 }
 template <class ItemType>
@@ -193,8 +203,8 @@ int HashTable<ItemType>::collisions()
 	}
 	return numCollisions;
 }
-template<class ItemType>
-void HashTable<ItemType>::longestLinkedList(void visit(ItemType&))
+template <class ItemType>
+void HashTable<ItemType>::longestLinkedList(void visit(ItemType &))
 {
 	int longest = 0;
 
@@ -212,7 +222,7 @@ void HashTable<ItemType>::longestLinkedList(void visit(ItemType&))
 		}
 	}
 }
-template<class ItemType>
+template <class ItemType>
 int HashTable<ItemType>::amountLinkedLists()
 {
 	int numLinkedLists = 0;
@@ -224,7 +234,7 @@ int HashTable<ItemType>::amountLinkedLists()
 	}
 	return numLinkedLists;
 }
-template<class ItemType>
+template <class ItemType>
 double HashTable<ItemType>::avgNumNodes()
 {
 	return (static_cast<double>(collisions())) / amountLinkedLists();

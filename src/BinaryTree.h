@@ -60,17 +60,14 @@ void BinaryTree<ItemType>::destroyTree(BinaryNode<ItemType> *nodePtr)
     if (!nodePtr)
     {
     }
-
     else if (!nodePtr->getRightPtr() && !nodePtr->getLeftPtr())
     {
         delete nodePtr;
     }
-
     else if (nodePtr->getRightPtr())
     {
         destroyTree(nodePtr->getRightPtr());
     }
-
     else
     {
         destroyTree(nodePtr->getLeftPtr());

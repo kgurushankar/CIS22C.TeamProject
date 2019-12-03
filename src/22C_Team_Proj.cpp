@@ -19,8 +19,8 @@ void printHash(HashTable<Mail> *table);
 void visitPriorityMail(PriorityMail &mail);
 void visitTrackingMail(TrackingMail &mail);
 void visitMail(Mail &mail);
-void buildBSTs(BinarySearchTree<PriorityMail> *priority, BinarySearchTree<TrackingMail> *tracking, HashTable<Mail> hash, char mail[], char address[]);
-void input(BinarySearchTree<PriorityMail> *priorityTree, BinarySearchTree<TrackingMail> *trackingTree, HashTable<Mail> hash);
+void buildBSTs(BinarySearchTree<PriorityMail> *priority, BinarySearchTree<TrackingMail> *tracking, HashTable<Mail> hash, string mail, string address);
+void inputManager(BinarySearchTree<PriorityMail> *priorityTree, BinarySearchTree<TrackingMail> *trackingTree, HashTable<Mail> hash);
 void printMenu();
 
 /**
@@ -28,53 +28,82 @@ This is the best I can think of and I think we need to add setter for the tracki
 **/
 int main()
 {
-    HashTable<Mail> stateTable = HashTable<Mail>(59); // 59 because that many states
-    BinarySearchTree<TrackingMail> trackingTable = BinarySearchTree<TrackingMail>();
-    BinarySearchTree<PriorityMail> priorityTable = BinarySearchTree<PriorityMail>();
+    HashTable<Mail> hash = HashTable<Mail>();
+    BinarySearchTree<TrackingMail> *trackingTree = new BinarySearchTree<TrackingMail>();
+    BinarySearchTree<PriorityMail> *priorityTree = new BinarySearchTree<PriorityMail>();
 
     //Init data structs
     printMenu();
 
     string choice = "";
     string options = "";
-    while (choice == "QUIT" || choice == "EXIT" || choice == "Q" || choice == "E")
+    while (choice != "QUIT" && choice != "EXIT" && choice != "Q" && choice != "E")
     {
         std::cout << "Pick an option" << endl;
         getline(std::cin, choice);
-        options = choice.substr(choice.find(" "));
-        choice = choice.substr(0, choice.find(" "));
+        int tmp = choice.find(" ");
+        if (string::npos == tmp)
+        {
+            options = choice.substr(tmp + 1); // + 1 to drop off the space
+            choice = choice.substr(0, tmp);
+        }
+        else
+            options = "";
         if (choice == "READ")
         {
+            string addressFile, mailFile;
+            int tmp2 = choice.find(" ");
+            if (string::npos != tmp2)
+            {
+                mailFile = options.substr(tmp2 + 1);
+                addressFile = options.substr(0, tmp2);
+                buildBSTs(priorityTree, trackingTree, hash, mailFile, addressFile);
+            }
+            else
+            {
+                cout << "Bad Input" << endl;
+            }
         }
         else if (choice == "PRINT")
         {
+            printMail(trackingTree);
         }
         else if (choice == "SEARCH")
         {
-        }
-        else if (choice == "MAILBOX")
-        {
-        }
-        else if (choice == "STATE")
-        {
+            int num = stoi(options);
+            TrackingMail target = TrackingMail(Mail(num, Address(), Address(), Date(), Type()));
+            TrackingMail result;
+            trackingTree->getEntry(target, result);
+            cout << result;
         }
         else if (choice == "SEND")
         {
+            trackingTree.
         }
         else if (choice == "REMOVE")
         {
+            int num = stoi(options);
         }
         else if (choice == "INSERT")
         {
+            inputManager(priorityTree, trackingTree, hash);
         }
         else if (choice == "CLEAR")
         {
+            hash = HashTable<Mail>();
+            trackingTree = new BinarySearchTree<TrackingMail>();
+            priorityTree = new BinarySearchTree<PriorityMail>();
         }
         else if (choice == "QUIT" || choice == "EXIT" || choice == "Q" || choice == "E")
         {
+            cout << endl
+                 << endl
+                 << "Goodbye!" << endl;
+            return 0;
         }
         else
         {
+            cout << "Bad input" << endl;
         }
     }
     return 0;
@@ -129,7 +158,7 @@ void visitMail(Mail &mail)
  BuildBSTS: This function builds both trees and hash from input file
  input parameter: BST Tree1, BST Tree2, and array of int hash
  *****************************************************************************/
-void buildBSTs(BinarySearchTree<PriorityMail> *priority, BinarySearchTree<TrackingMail> *tracking, HashTable<Mail> hash, char mail[], char address[])
+void buildBSTs(BinarySearchTree<PriorityMail> *priority, BinarySearchTree<TrackingMail> *tracking, HashTable<Mail> hash, string mail, string address)
 {
     int id;
     int zip;
@@ -180,7 +209,7 @@ input: This function allows you to insert a mail object and also checks for dupl
 input parameters: BST mytree, BST mytree2, hash
 ************************************************************/
 
-void input(BinarySearchTree<PriorityMail> *priorityTree, BinarySearchTree<TrackingMail> *trackingTree, HashTable<Mail> hash)
+void inputManager(BinarySearchTree<PriorityMail> *priorityTree, BinarySearchTree<TrackingMail> *trackingTree, HashTable<Mail> hash)
 {
     string streetname;
     string city;
@@ -241,12 +270,12 @@ void input(BinarySearchTree<PriorityMail> *priorityTree, BinarySearchTree<Tracki
 void printMenu()
 {
     std::cout << "READ address mail" << '\t' << "Load data from input files" << endl
-              << "PRINT n shift" << '\t' << "Print out the list of mail in order of which they need to be sent (starting at shift, at most n entries)" << endl
-              << "PRINT n " << '\t' << "Print out the list of mail in order of which they need to be sent (from top, at most n)" << endl
-              << "PRINT" << '\t' << "Print out the list of mail in order of which they need to be sent (from top, at most first 100)" << endl
+              //   << "PRINT n shift" << '\t' << "Print out the list of mail in order of which they need to be sent (starting at shift, at most n entries)" << endl
+              //   << "PRINT n " << '\t' << "Print out the list of mail in order of which they need to be sent (from top, at most n)" << endl
+              << "PRINT" << '\t' << "Print out the list of mail in order of which they need to be sent (from top)" << endl
               << "SEARCH tracking_number" << '\t' << "Search for a mail with specific tracking number" << endl
-              << "MAILBOX address" << '\t' << "List all mail going to given address" << endl
-              << "STATE state" << '\t' << "List all mail going to state" << endl
+              //   << "MAILBOX address" << '\t' << "List all mail going to given address" << endl
+              //   << "STATE state" << '\t' << "List all mail going to state" << endl
               << "SEND n" << '\t' << "Removes first n mails from the list" << endl
               << "REMOVE tracking_number" << '\t' << "Removes mail with id from list" << endl
               << "INSERT" << '\t' << "Guides through inserting a new mail (specify tracking number, but does a duplicate check)" << endl
