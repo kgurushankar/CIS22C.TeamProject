@@ -19,8 +19,8 @@ void printHash(HashTable<Mail> *table);
 void visitPriorityMail(PriorityMail &mail);
 void visitTrackingMail(TrackingMail &mail);
 void visitMail(Mail &mail);
-void buildBSTs(BinarySearchTree<PriorityMail> *priority, BinarySearchTree<TrackingMail> *tracking, HashTable<Mail> hash, string mail, string address);
-void inputManager(BinarySearchTree<PriorityMail> *priorityTree, BinarySearchTree<TrackingMail> *trackingTree, HashTable<Mail> hash);
+void buildBSTs(BinarySearchTree<PriorityMail> *priority, BinarySearchTree<TrackingMail> *tracking, HashTable<Mail> *hash, string mail, string address);
+void inputManager(BinarySearchTree<PriorityMail> *priorityTree, BinarySearchTree<TrackingMail> *trackingTree, HashTable<Mail> *hash);
 void printMenu();
 
 /**
@@ -28,7 +28,7 @@ This is the best I can think of and I think we need to add setter for the tracki
 **/
 int main()
 {
-    HashTable<Mail> hash = HashTable<Mail>();
+    HashTable<Mail> *hash = new HashTable<Mail>();
     BinarySearchTree<TrackingMail> *trackingTree = new BinarySearchTree<TrackingMail>();
     BinarySearchTree<PriorityMail> *priorityTree = new BinarySearchTree<PriorityMail>();
 
@@ -52,7 +52,6 @@ int main()
         if (choice == "READ")
         {
             string addressFile, mailFile;
-            cout << options;
             if (string::npos != options.find(" "))
             {
                 mailFile = options.substr(options.find(" ") + 1);
@@ -73,8 +72,10 @@ int main()
             int num = stoi(options);
             TrackingMail target = TrackingMail(Mail(num, Address(), Address(), Date(), Type()));
             TrackingMail result;
-            trackingTree->getEntry(target, result);
-            cout << result;
+            if (trackingTree->getEntry(target, result))
+                cout << result;
+            else
+                cout << "Not found";
         }
         else if (choice == "SEND")
         {
@@ -89,7 +90,7 @@ int main()
                 tm = TrackingMail(m);
                 priorityTree->remove(pm);
                 trackingTree->remove(tm);
-                hash.deleteHash(m);
+                hash->deleteHash(m);
                 cout << m.getTrackingNumber() << endl;
             }
         }
@@ -103,7 +104,7 @@ int main()
             PriorityMail pm = PriorityMail(m);
             priorityTree->remove(pm);
             trackingTree->remove(tm);
-            hash.deleteHash(m);
+            hash->deleteHash(m);
             cout << m;
         }
         else if (choice == "INSERT")
@@ -112,7 +113,10 @@ int main()
         }
         else if (choice == "CLEAR")
         {
-            hash = HashTable<Mail>();
+            delete hash;
+            delete trackingTree;
+            delete priorityTree;
+            hash = new HashTable<Mail>();
             trackingTree = new BinarySearchTree<TrackingMail>();
             priorityTree = new BinarySearchTree<PriorityMail>();
         }
@@ -127,7 +131,6 @@ int main()
         {
             cout << "Bad Directive" << endl;
         }
-        cout << choice;
     }
     return 0;
 }
@@ -181,7 +184,7 @@ void visitMail(Mail &mail)
  BuildBSTS: This function builds both trees and hash from input file
  input parameter: BST Tree1, BST Tree2, and array of int hash
  *****************************************************************************/
-void buildBSTs(BinarySearchTree<PriorityMail> *priority, BinarySearchTree<TrackingMail> *tracking, HashTable<Mail> hash, string mail, string address)
+void buildBSTs(BinarySearchTree<PriorityMail> *priority, BinarySearchTree<TrackingMail> *tracking, HashTable<Mail> *hash, string mail, string address)
 {
     int id;
     int zip;
@@ -208,19 +211,50 @@ void buildBSTs(BinarySearchTree<PriorityMail> *priority, BinarySearchTree<Tracki
         std::cout << "Error opening the input file: \"" << address << "\"" << std::endl;
         exit(EXIT_FAILURE);
     }
+    //Burn header lines
+    string tmp;
+    std::getline(inFile, tmp);
+    std::getline(inFile2, tmp);
 
     Address a[10000];
-    while (inFile2 >> id >> street >> city >> state >> zip)
+    while (std::getline(inFile2, tmp))
     {
+        string t = tmp;
+        char delimiter = '\t';
+        size_t v = t.find(delimiter);
+        id = stoi(t.substr(0, v));
+        t = t.substr(v);
+        v = t.find(delimiter);
+        street = t.substr(0, v);
+        t = t.substr(v);
+        v = t.find(delimiter);
+        cout << t << endl;
+        city = t.substr(0, v);
+        t = t.substr(v);
+        v = t.find(delimiter);
+        cout << t << endl;
+        state = t.substr(0, v);
+        t = t.substr(v);
+        cout << id << endl
+             << street << endl
+             << city << endl
+             << state << endl;
+        zip = stoi(t);
+        // cout << "hi";
+        cout << zip << endl;
         a[id] = Address(street, city, State(state), zip);
+        cout << a[id];
     }
 
     Mail m;
     while (inFile >> id >> from >> to >> datestr >> type)
     {
+        // cout << datestr;
         m = Mail(id, a[from], a[to], Date(datestr), Type(type));
+        // cout << m;
         priority->insert(PriorityMail(m));
         tracking->insert(TrackingMail(m));
+        hash->insertHash(m);
     }
 
     inFile.close();
@@ -232,7 +266,7 @@ input: This function allows you to insert a mail object and also checks for dupl
 input parameters: BST mytree, BST mytree2, hash
 ************************************************************/
 
-void inputManager(BinarySearchTree<PriorityMail> *priorityTree, BinarySearchTree<TrackingMail> *trackingTree, HashTable<Mail> hash)
+void inputManager(BinarySearchTree<PriorityMail> *priorityTree, BinarySearchTree<TrackingMail> *trackingTree, HashTable<Mail> *hash)
 {
     string streetname;
     string city;
@@ -282,7 +316,7 @@ void inputManager(BinarySearchTree<PriorityMail> *priorityTree, BinarySearchTree
     {
         trackingTree->insert(TrackingMail(pack));
         priorityTree->insert(PriorityMail(pack));
-        hash.insertHash(pack);
+        hash->insertHash(pack);
     }
     else
     {

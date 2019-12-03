@@ -102,8 +102,8 @@ ostream &operator<<(ostream &out, Date &d)
 Date::Date(string s)
 {
     this->day = stoi(s.substr(0, s.find("/")));
-    this->month = stoi(s.substr(s.find("/"), s.find("/", s.find("/"))));
-    this->year = stoi(s.substr(s.find("/", s.find("/"))));
+    this->month = stoi(s.substr(s.find("/") + 1, s.find("/", s.find("/")) - 1));
+    this->year = stoi(s.substr(s.find("/", s.find("/") + 1) + 1));
 }
 
 #endif
