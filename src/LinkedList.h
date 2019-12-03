@@ -7,7 +7,9 @@
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
 #include "ListNode.hpp"
-using namespace std;
+#include <iostream>
+using std::cout;
+using std::endl;
 
 template<class ItemType>
 class LinkedList
@@ -193,7 +195,7 @@ bool LinkedList<ItemType>::getEntry(int index, ItemType& returnedEntry)
 	if (index < 0 || index >= count)
 		return false;
 
-	BinaryNode<ItemType>* current = head;
+	ListNode<ItemType>* current = head;
 
 	for (int i = 0; i < index; i++)
 		current = current->next;

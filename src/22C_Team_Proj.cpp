@@ -18,7 +18,7 @@ This is the best I can think of and I think we need to add setter for the tracki
 int main()
 {
     HashTable<Mail> stateTable = HashTable<Mail>(59); // 59 because that many states
-    BinarySearchTree<Mail> trackingTable = BinarySearchTree<Mail>();
+    BinarySearchTree<TrackingMail> trackingTable = BinarySearchTree<TrackingMail>();
     BinarySearchTree<PriorityMail> priorityTable = BinarySearchTree<PriorityMail>();
 
     //Init data structs
@@ -34,7 +34,7 @@ int main()
     }
 }
 
-void searchTrackingNumber(BinarySearchTree<Mail> *tree)
+void searchTrackingNumber(BinarySearchTree<TrackingMail> *tree)
 {
     int tracking;
     std::cout << "Please enter the tracking number: ";
@@ -49,7 +49,7 @@ void searchTrackingNumber(BinarySearchTree<Mail> *tree)
     }
 }
 
-void searchByState(Hashtable *table)
+void searchByState(HashTable<Mail> *table)
 {
     Mail obj;
     Mail returnItem;
@@ -66,27 +66,22 @@ void searchByState(Hashtable *table)
     }
 }
 
-void pintOrder(BinarySearchTree<Mail> *idTree)
+void printOrder(BinarySearchTree<PriorityMail> *idTree)
 {
-    idTree->inorder(visitOrder);
+    idTree->inOrder(visitMail);
 }
 
-void printMail(BinarySearchTree<Mail> *idTree)
+void printMail(BinarySearchTree<TrackingMail> *idTree)
 {
-    idTree->inorder(visitMail);
+    idTree->inOrder(visitMail);
 }
 
-void printState(HasTable *table)
+void printState(HashTable<Mail> *table)
 {
-    table->printHash(state);
+    table->printHash(visitMail);
 }
 
-void visitOrder(HashTable *table)
-{
-    table->printHash(trackingnumber);
-}
-
-void visitMail(Mail &mail, HashTable *table)
+void visitMail(Mail &mail)
 {
     std::cout << mail;
 }
@@ -95,85 +90,46 @@ void visitMail(Mail &mail, HashTable *table)
  BuildBSTS: This function builds both trees and hash from input file
  input parameter: BST Tree1, BST Tree2, and array of int hash
  *****************************************************************************/
-void buildBSTs(BinarySearchTree<Mail> *mytree1, BinarySearchTree<Mail> *mytree2, int hash[])
+void buildBSTs(BinarySearchTree<PriorityMail> *priority, BinarySearchTree<TrackingMail> *tracking, HashTable<Mail> hash,char[] mail, char[] address)
 {
-    State st;
-    Type t;
-    char mailInfo[] = "mail.txt";
-    char addressInfo[] = "address.txt";
-    int day, month, year, zip;
-    char slash;
+    int id;
+    int zip;
+    int from;
+    int to;
     string street = "";
     string city = "";
     string state = "";
+    string datestr = "";
     string type = "";
-    ifstream inFile, inFile2;
-    inFile.open(mailInfo);
-    inFile2.open(addressInfo);
+    ifstream inFile;
+    ifstream inFile2;
+    inFile.open(mail);
+    inFile2.open(address);
+
     if (!inFile)
     {
-        std::cout << "Error opening the input file: \"" << mailInfo << "\"" << endl;
+        std::cout << "Error opening the input file: \"" << mailInfo << "\"" << std::endl;
         exit(EXIT_FAILURE);
     }
 
     if (!inFile2)
     {
-        std::cout << "Error opening the input file: \"" << addressInfo << "\"" << endl;
+        std::cout << "Error opening the input file: \"" << addressInfo << "\"" << std::endl;
         exit(EXIT_FAILURE);
     }
 
-    while (inFile && inFile2)
-    {
-        // In the text file I removed the header from mail.txt
-        inFile >> trackingnum;
-        inFile.ignore(12);
-        inFile >> month >> slash >> day >> slash >> year >> type;
-        //std::cout << month;
-        //std::cout << slash;
-        //std::cout << day;
-        //std::cout << slash;
-        //std::cout << year << endl;
-
-        Date D(month, day, year);
-        //std::cout << type << endl;
-        if (type == "normal")
-        {
-            t = normal;
-        }
-        else if (type == "economy")
-        {
-            t = economy;
-        }
-        else
-        {
-            t = priority;
-        }
-        // In text file I removed the header from address.txt
-        inFile2.ignore(3);
-        getline(inFile2, street, ',');
-        getline(inFile2, city, ',');
-        getline(inFile2, state, ',');
-        inFile2 >> zip;
-        inFile2.ignore(3);
-        //std::cout << street << endl;
-        st = toState(state);
-        Address A(street, city, st, zip);
-        inFile2.ignore(3);
-        getline(inFile2, street, ',');
-        getline(inFile2, city, ',');
-        getline(inFile2, state, ',');
-        inFile2 >> zip;
-        inFile2.ignore(3);
-        st = toState(state);
-        Address B(street, city, st, zip);
-        Mail package = new Mail(A, B, D, t);
-        //std::cout << street << endl;
-        //std::cout << city << endl;
-        //std::cout << state << endl;
-        //std::cout << zip << endl;
-        // insert tracking num into hash
-        mytree1->insert(package);
+    Address a[10000];
+    while (inFile2>>id>>street>>city>>state>>zip){
+        a[id] = Address(street,city,State(state),zip);
     }
+
+    Mail m;
+    while (inFile>>id>>from>>to>>datestr>>type){
+        m = Mail(id, a[from], a[to], Date(datestr), Type(type));
+        priority->insert(PriorityMail(package));
+        tracking->insert(TrackingMail(package));
+    }
+
     inFile.close();
     inFile2.close();
 }
@@ -195,42 +151,39 @@ void input(BinarySearchTree<Mail> *mytree, BinarySearchTree<Mail> *mytree2, hash
     int tracking;
     Type t;
     State st;
-    Date D;
+    Date d;
+    std::cout << "enter a tracking num\n";
+    std::cin >> tracking;
     std::cout << "enter a street address (sender)\n";
     getline(std::cin, streetname);
-    std::cout << "enter a city(sender)\n";
+    std::cout << "enter a city (sender)\n";
     getline(std::cin, city);
     std::cout << "enter a state (sender)\n";
     getline(std::cin, state);
     std::cout << "enter a zip or postal code (5 digits) (sender)\n";
     std::cin >> zip;
-    std::cout << "enter a tracking num (sender)\n";
-    std::cin >> tracking;
     std::cout << "enter what type of package it is (priority, economy, normal) \n";
     getline(std::cin, type);
-    t = toType(type);
-    st = toState(state);
-    Address sender(streetname, city, st, zip);
-    std::cout << "enter a street address (sender)\n";
+    Address sender = Address(streetname, city, State(state), zip);
+    std::cout << "enter a street address (recipient)\n";
     getline(std::cin, streetname);
-    std::cout << "enter a city(sender)\n";
+    std::cout << "enter a city (recipient)\n";
     getline(std::cin, city);
-    std::cout << "enter a state (sender)\n";
+    std::cout << "enter a state (recipient)\n";
     getline(std::cin, state);
-    std::cout << "enter a zip or postal code (5 digits) (sender)\n";
+    std::cout << "enter a zip or postal code (5 digits) (recipient)\n";
     std::cin >> zip;
-    std::cout << "enter a month\n";
+    std::cout << "enter the sending month\n";
     std::cin >> month;
-    std::cout << "enter a day\n";
+    std::cout << "enter the sending day\n";
     std::cin >> day;
-    std::cout << "enter a year ]n";
+    std::cout << "enter the sending year\n";
     std::cin >> year;
-    D.setMonth(month);
-    D.setDay(day);
-    D.setYear(year);
-    Address reciever(streetname, city, st, zip);
-    Mail pack = new Mail(sender, reciever, D, type);
-    if (!mytree->getEntry(pack, pack) && mytree2->getEntry(pack, pack))
+    d = Date(day-1,month-1,year-1);
+    Address reciever=Address(streetname, city, st, zip);
+    Mail pack =  Mail(tracking,sender, reciever, d, type);
+    Mail tmp;
+    if (!mytree->getEntry(pack, tmp) && !mytree2->getEntry(pack, tmp))
     {
         mytree->insert(pack);
         mytree2->insert(pack);

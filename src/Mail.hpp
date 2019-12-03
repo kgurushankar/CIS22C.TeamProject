@@ -30,7 +30,13 @@ private:
     int trackingNumber;
 
 public:
-    Mail(int, Address, Address, Date, Type);
+    Mail(int n, Address f, Address t, Date d, Type p){
+        this->trackingNumber = n;
+        this->from = f;
+        this->to = t;
+        this->date = d;
+        this->type = p;
+    }
     Mail()
     {
         from = Address();
@@ -48,7 +54,7 @@ public:
     Address getTo() const { return to; }
     Date getSent() const { return sent; }
     Type getType() const { return this->type; }
-    int comparePriority(const Mail &);
+    string hashString(){return "" + trackingnumber;}
 
     // Other functions
     friend ostream &operator<<(ostream &, Mail &);

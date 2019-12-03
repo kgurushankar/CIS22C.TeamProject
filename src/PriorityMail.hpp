@@ -16,20 +16,21 @@ class PriorityMail
 private:
 	Mail m;
 
-	int _compare(PriorityMail &o);
+	int _compare(const PriorityMail &o);
 
 public:
 	PriorityMail(Mail mail){this->m = mail;};
+	PriorityMail(){this->m=Mail();}
 
 	Mail getMail() { return m; }
 
 	// Other functions
 	friend ostream &operator<<(ostream &, Mail &);
 	//Comparing priority
-	bool operator<(PriorityMail &o) { return  this->_compare(o)<0; }
-	bool operator>(PriorityMail &o) { return  this->_compare(o)>0; }
-	bool operator==(PriorityMail &o) { return this->_compare(o)==0; }
-	bool operator!=(PriorityMail &o) { return this->_compare(o)!=0; }
+	bool operator<( const PriorityMail &o) { return  this->_compare(o)<0; }
+	bool operator>( const PriorityMail &o) { return  this->_compare(o)>0; }
+	bool operator==(const PriorityMail &o) { return this->_compare(o)==0; }
+	bool operator!=(const PriorityMail &o) { return this->_compare(o)!=0; }
 };
 ostream &operator<<(ostream &out, PriorityMail &m)
 {
@@ -37,7 +38,7 @@ ostream &operator<<(ostream &out, PriorityMail &m)
 	return out;
 }
 
-int PriorityMail::_compare(PriorityMail &o){
+int PriorityMail::_compare(const PriorityMail &o){
 	if (this->m.getType()!=o.m.getType())
 	{
 		if (this->m.getType()>o.m.getType()) // if i have a higher priority
@@ -45,9 +46,9 @@ int PriorityMail::_compare(PriorityMail &o){
 		else 
 			return -1;
 	}
-	else if (*(this->m.getSent())!=*(o.m.getSent()))
+	else if (this->m.getSent()!=o.m.getSent())
 	{
-		if (this->m.getSent()<*(o.m.getSent())) //if i was sent sooner
+		if (this->m.getSent()<o.m.getSent()) //if i was sent sooner
 			return 1;
 		else 
 			return -1;

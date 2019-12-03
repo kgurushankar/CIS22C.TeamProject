@@ -10,7 +10,7 @@
 #define LOAD_FACTOR 75
 using namespace std;
 template<class ItemType>
-class Hash
+class HashTable
 {
 private:
 	LinkedList<ItemType>* hashList;
@@ -20,13 +20,13 @@ private:
 	void resize();
 public:
 	//Constructor
-	Hash(int s)
+	HashTable(int s)
 	{
 		arraySize = calcPrime(s);
 		hashList = new LinkedList<ItemType>[arraySize];
 	}
 	// Destructor
-	~Hash();
+	~HashTable();
 	//
 	int getSize() { return arraySize; }
 	bool isEmpty() { return arraySize == 0; }
@@ -43,9 +43,9 @@ public:
 	double avgNumNodes();
 };
 template <class ItemType>
-void Hash<ItemType>::resize()
+void HashTable<ItemType>::resize()
 {
-	Hash <ItemType> newHashTable(arraySize * 2);
+	HashTable<ItemType> newHashTable=HashTable<ItemType>(arraySize * 2);
 
 	for (int i = 0; i < arraySize; i++) {
 		for (int j = 0; j < hashList[i].getCount(); j++) {
@@ -69,7 +69,7 @@ void Hash<ItemType>::resize()
 	// otherwise desctructor of newHashTable will destroy rehashed data
 }
 template< class ItemType>
-int Hash<ItemType>::calcPrime(int size)
+int HashTable<ItemType>::calcPrime(int size)
 {
 	while (true) {
 		bool isPrime = false;
@@ -104,7 +104,7 @@ int Hash<ItemType>::calcPrime(int size)
 }
 
 template<class ItemType>
-int Hash<ItemType>::getHashIndex(string input)
+int HashTable<ItemType>::getHashIndex(string input)
 {
 	int index = 0;
 	int cube;
@@ -122,9 +122,9 @@ int Hash<ItemType>::getHashIndex(string input)
 }
 
 template<class ItemType>
-void Hash<ItemType>::insertHash(ItemType& item)
+void HashTable<ItemType>::insertHash(ItemType& item)
 {
-	int hashKey = getHashIndex(item.getTrack());
+	int hashKey = getHashIndex(item.hashString());
 	hashList[hashKey].insertNode(item);
 	if (calcLoadFactor() > LOAD_FACTOR)
 	{
@@ -133,21 +133,21 @@ void Hash<ItemType>::insertHash(ItemType& item)
 }
 
 template<class ItemType>
-bool Hash<ItemType>::deleteHash(ItemType& target)
+bool HashTable<ItemType>::deleteHash(ItemType& target)
 {
-	int key = getHashIndex(target.getTrack());
+	int key = getHashIndex(target.hashString());
 	return hashList[key].deleteNode(target);
 }
 
 template<class ItemType>
-bool Hash<ItemType>::searchHash(ItemType& target, ItemType& returnItem)
+bool HashTable<ItemType>::searchHash(ItemType& target, ItemType& returnItem)
 {
-	int key = getHashIndex(target.getTrack());
+	int key = getHashIndex(target.hashString());
 	return hashList[key].searchList(target, returnItem);
 }
 
 template<class ItemType>
-void Hash<ItemType>::printHash(void visit(ItemType&))
+void HashTable<ItemType>::printHash(void visit(ItemType&))
 {
 	for (int i = 0; i < arraySize; i++)
 	{
@@ -161,7 +161,7 @@ void Hash<ItemType>::printHash(void visit(ItemType&))
 }
 
 template<class ItemType>
-Hash<ItemType>::~Hash()
+HashTable<ItemType>::~Hash()
 {
 	for (int i = 0; i < arraySize; i++)
 	{
@@ -170,7 +170,7 @@ Hash<ItemType>::~Hash()
 	}
 }
 template <class ItemType>
-double Hash<ItemType>::calcLoadFactor()
+double HashTable<ItemType>::calcLoadFactor()
 {
 	int counter = 0;
 	double loadFactor;
@@ -183,7 +183,7 @@ double Hash<ItemType>::calcLoadFactor()
 	return loadFactor;
 }
 template <class ItemType>
-int Hash<ItemType>::collisions()
+int HashTable<ItemType>::collisions()
 {
 	int numCollisions = 0;
 	for (int i = 0; i < arraySize; i++)
@@ -194,7 +194,7 @@ int Hash<ItemType>::collisions()
 	return numCollisions;
 }
 template<class ItemType>
-void Hash<ItemType>::longestLinkedList(void visit(ItemType&))
+void HashTable<ItemType>::longestLinkedList(void visit(ItemType&))
 {
 	int longest = 0;
 
@@ -213,7 +213,7 @@ void Hash<ItemType>::longestLinkedList(void visit(ItemType&))
 	}
 }
 template<class ItemType>
-int Hash<ItemType>::amountLinkedLists()
+int HashTable<ItemType>::amountLinkedLists()
 {
 	int numLinkedLists = 0;
 
@@ -225,7 +225,7 @@ int Hash<ItemType>::amountLinkedLists()
 	return numLinkedLists;
 }
 template<class ItemType>
-double Hash<ItemType>::avgNumNodes()
+double HashTable<ItemType>::avgNumNodes()
 {
 	return (static_cast<double>(collisions())) / amountLinkedLists();
 }

@@ -66,7 +66,7 @@ bool BinarySearchTree<ItemType>::getEntry(const ItemType& anEntry, ItemType & re
     
     if (obj)
     {
-        returnedItem = obj->getName();
+        returnedItem = obj->getItem();
         return true;
     }
     return false;
@@ -110,12 +110,10 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::findNode(BinaryNode<ItemType>*
     {
         return NULL;
     }
-    
     else if (nodePtr->getItem() == target)
     {
         return nodePtr;
     }
-    
     else if (nodePtr->getItem() > target)
     {
         return findNode(nodePtr->getLeftPtr(), target);
