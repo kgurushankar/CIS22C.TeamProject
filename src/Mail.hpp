@@ -34,7 +34,7 @@ public:
         this->trackingNumber = n;
         this->from = f;
         this->to = t;
-        this->date = d;
+        this->sent = d;
         this->type = p;
     }
     Mail()
@@ -54,7 +54,7 @@ public:
     Address getTo() const { return to; }
     Date getSent() const { return sent; }
     Type getType() const { return this->type; }
-    string hashString(){return "" + trackingnumber;}
+    string hashString(){return "" + trackingNumber;}
 
     // Other functions
     friend ostream &operator<<(ostream &, Mail &);

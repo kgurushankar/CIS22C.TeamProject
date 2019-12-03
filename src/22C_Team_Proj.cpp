@@ -90,7 +90,7 @@ void visitMail(Mail &mail)
  BuildBSTS: This function builds both trees and hash from input file
  input parameter: BST Tree1, BST Tree2, and array of int hash
  *****************************************************************************/
-void buildBSTs(BinarySearchTree<PriorityMail> *priority, BinarySearchTree<TrackingMail> *tracking, HashTable<Mail> hash,char[] mail, char[] address)
+void buildBSTs(BinarySearchTree<PriorityMail> *priority, BinarySearchTree<TrackingMail> *tracking, HashTable<Mail> hash, char[] mail, char[] address)
 {
     int id;
     int zip;
@@ -108,26 +108,28 @@ void buildBSTs(BinarySearchTree<PriorityMail> *priority, BinarySearchTree<Tracki
 
     if (!inFile)
     {
-        std::cout << "Error opening the input file: \"" << mailInfo << "\"" << std::endl;
+        std::cout << "Error opening the input file: \"" << mail << "\"" << std::endl;
         exit(EXIT_FAILURE);
     }
 
     if (!inFile2)
     {
-        std::cout << "Error opening the input file: \"" << addressInfo << "\"" << std::endl;
+        std::cout << "Error opening the input file: \"" << address << "\"" << std::endl;
         exit(EXIT_FAILURE);
     }
 
     Address a[10000];
-    while (inFile2>>id>>street>>city>>state>>zip){
-        a[id] = Address(street,city,State(state),zip);
+    while (inFile2 >> id >> street >> city >> state >> zip)
+    {
+        a[id] = Address(street, city, State(state), zip);
     }
 
     Mail m;
-    while (inFile>>id>>from>>to>>datestr>>type){
+    while (inFile >> id >> from >> to >> datestr >> type)
+    {
         m = Mail(id, a[from], a[to], Date(datestr), Type(type));
-        priority->insert(PriorityMail(package));
-        tracking->insert(TrackingMail(package));
+        priority->insert(PriorityMail(m));
+        tracking->insert(TrackingMail(m));
     }
 
     inFile.close();
@@ -138,7 +140,7 @@ void buildBSTs(BinarySearchTree<PriorityMail> *priority, BinarySearchTree<Tracki
 input: This function allows you to insert a mail object and also checks for duplicate objects
 input parameters: BST mytree, BST mytree2, hash
 ************************************************************/
-void input(BinarySearchTree<Mail> *mytree, BinarySearchTree<Mail> *mytree2, hash<int tracking> myhash)
+void input(BinarySearchTree<PriorityMail> *priorityTree, BinarySearchTree<TrackingMail> *trackingTree, HashTable<Mail> hash)
 {
     string streetname;
     string city;
@@ -179,15 +181,16 @@ void input(BinarySearchTree<Mail> *mytree, BinarySearchTree<Mail> *mytree2, hash
     std::cin >> day;
     std::cout << "enter the sending year\n";
     std::cin >> year;
-    d = Date(day-1,month-1,year-1);
-    Address reciever=Address(streetname, city, st, zip);
-    Mail pack =  Mail(tracking,sender, reciever, d, type);
-    Mail tmp;
-    if (!mytree->getEntry(pack, tmp) && !mytree2->getEntry(pack, tmp))
+    d = Date(day - 1, month - 1, year - 1);
+    Address reciever = Address(streetname, city, st, zip);
+    Mail pack = Mail(tracking, sender, reciever, d, type);
+    PriorityMail tmpp;
+    TrackingMail tmpt;
+    if (!priorityTree->getEntry(pack, tmpp) && !trackingTree->getEntry(pack, tmpt))
     {
-        mytree->insert(pack);
-        mytree2->insert(pack);
-        hash->insertHash(tracking);
+        trackingTree->insert(TrackingMail(pack));
+        priorityTree->insert(PriorityMail(pack));
+        hash.insertHash(pack);
     }
     else
     {
