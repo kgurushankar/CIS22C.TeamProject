@@ -27,6 +27,13 @@ public:
         this->state = s;
         this->zip = zip;
     }
+    Address(char street[], char city[], State s, int zip)
+    {
+        this->street = street;
+        this->city = city;
+        this->state = s;
+        this->zip = zip;
+    }
     Address()
     {
         street = "";
