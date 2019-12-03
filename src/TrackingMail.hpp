@@ -30,9 +30,9 @@ public:
 	bool operator==(const TrackingMail &o) { return (this->m.getTrackingNumber() == o.m.getTrackingNumber()); }
 	bool operator!=(const TrackingMail &o) { return (this->m.getTrackingNumber() != o.m.getTrackingNumber()); }
 };
-ostream &operator<<(ostream &out, TrackingMail &m)
+ostream &operator<<(ostream &out, TrackingMail &tm)
 {
-	out << m;
+	out << tm.m;
 	return out;
 }
 
