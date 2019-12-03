@@ -4,8 +4,8 @@
 #ifndef STATE_H
 #define STATE_H
 #include <iostream>
-using std::string;
 using std::ostream;
+using std::string;
 enum StateOption
 {
 	AL,
@@ -72,6 +72,7 @@ class State
 {
 private:
 	StateOption s;
+
 public:
 	State(string str);
 	State() { s; }
@@ -447,7 +448,7 @@ int State::toInt()
 		return 57;
 	else if (this->s == StateOption::WY)
 		return 58;
-	else 
+	else
 		return -1;
 }
 ostream &operator<<(ostream &out, State &a)

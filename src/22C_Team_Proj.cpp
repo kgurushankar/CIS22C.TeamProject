@@ -61,7 +61,7 @@ int main()
             }
             else
             {
-                cout << "Bad Input" << endl;
+                cout << "Bad options" << endl;
             }
         }
         else if (choice == "PRINT")
@@ -125,7 +125,7 @@ int main()
         }
         else
         {
-            cout << "Bad input" << endl;
+            cout << "Bad Directive" << endl;
         }
         cout << choice;
     }

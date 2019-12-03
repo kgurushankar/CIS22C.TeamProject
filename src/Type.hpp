@@ -5,13 +5,13 @@
 #ifndef TYPE_H
 #define TYPE_H
 #include <iostream>
-using std::string;
 using std::ostream;
-enum TypeOption 
+using std::string;
+enum TypeOption
 {
 	priority,
-    normal,
-    economy
+	normal,
+	economy
 };
 
 class Type
@@ -21,7 +21,7 @@ private:
 
 public:
 	Type(string str);
-	Type(){t;};
+	Type() { t; };
 	string toString();
 	int toInt();
 	bool operator==(Type &o) { return this->toInt() == o.toInt(); }
@@ -32,7 +32,8 @@ public:
 	bool operator<=(Type &o) { return this->toInt() <= o.toInt(); }
 	friend ostream &operator<<(ostream &, Type &);
 };
-Type::Type(string str){
+Type::Type(string str)
+{
 	if (str == "economy")
 		this->t = TypeOption::economy;
 	else if (str == "normal")
@@ -42,8 +43,9 @@ Type::Type(string str){
 	else
 		throw std::invalid_argument(str + " is not a valid type");
 }
-int Type::toInt(){
-	if (this->t== TypeOption::economy)
+int Type::toInt()
+{
+	if (this->t == TypeOption::economy)
 		return 0;
 	else if (this->t == TypeOption::normal)
 		return 1;
@@ -52,8 +54,9 @@ int Type::toInt(){
 	else
 		return -1;
 }
-string Type::toString(){
-		if (this->t== TypeOption::economy)
+string Type::toString()
+{
+	if (this->t == TypeOption::economy)
 		return "economy";
 	else if (this->t == TypeOption::normal)
 		return "normal";

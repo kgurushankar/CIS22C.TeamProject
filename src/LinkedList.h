@@ -156,7 +156,7 @@ void LinkedList<ItemType>::clear()
 	ListNode<ItemType> *pNext;
 
 	pCur = head->getNext();
-	while (pCur != head)
+	while (pCur != head && pCur != 0)
 	{
 		pNext = pCur->getNext();
 		cout << "DEBUG - Destructor: Now deleting " << endl;
