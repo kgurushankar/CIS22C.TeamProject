@@ -37,12 +37,12 @@ int main()
 
     string choice = "";
     string options = "";
-    while (choice != "QUIT" && choice != "EXIT" && choice != "Q" && choice != "E")
+    while (true)
     {
         std::cout << "Pick an option" << endl;
         getline(std::cin, choice);
         int tmp = choice.find(" ");
-        if (string::npos == tmp)
+        if (string::npos != choice.find(" "))
         {
             options = choice.substr(tmp + 1); // + 1 to drop off the space
             choice = choice.substr(0, tmp);
@@ -52,11 +52,11 @@ int main()
         if (choice == "READ")
         {
             string addressFile, mailFile;
-            int tmp2 = choice.find(" ");
-            if (string::npos != tmp2)
+            cout << options;
+            if (string::npos != options.find(" "))
             {
-                mailFile = options.substr(tmp2 + 1);
-                addressFile = options.substr(0, tmp2);
+                mailFile = options.substr(options.find(" ") + 1);
+                addressFile = options.substr(0, options.find(" "));
                 buildBSTs(priorityTree, trackingTree, hash, mailFile, addressFile);
             }
             else
@@ -127,6 +127,7 @@ int main()
         {
             cout << "Bad input" << endl;
         }
+        cout << choice;
     }
     return 0;
 }
