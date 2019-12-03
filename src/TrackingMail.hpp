@@ -23,7 +23,7 @@ public:
 	Mail getMail() { return m; }
 
 	// Other functions
-	friend ostream &operator<<(ostream &, Mail &);
+	friend ostream &operator<<(ostream &, TrackingMail &);
 	//Comparing tracking number
 	bool operator<( const TrackingMail &o) { return (this->m.getTrackingNumber() < o.m.getTrackingNumber()); }
 	bool operator>( const TrackingMail &o) { return (this->m.getTrackingNumber() > o.m.getTrackingNumber()); }
@@ -32,7 +32,7 @@ public:
 };
 ostream &operator<<(ostream &out, TrackingMail &tm)
 {
-	out << tm.m;
+	out <<tm.m;
 	return out;
 }
 
