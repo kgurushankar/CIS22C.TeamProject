@@ -20,7 +20,13 @@ private:
     int zip;
 
 public:
-    Address(string, string, State, int);
+    Address(string street, string city, State s, int zip)
+    {
+        this->street = street;
+        this->city = city;
+        this->state = s;
+        this->zip = zip;
+    }
     Address()
     {
         street = "";

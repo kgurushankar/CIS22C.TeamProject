@@ -1,4 +1,3 @@
-#pragma once
 // Specification file for the LinkedList class
 // Written By: A. Student
 // Changed By:
@@ -11,28 +10,27 @@
 using std::cout;
 using std::endl;
 
-template<class ItemType>
+template <class ItemType>
 class LinkedList
 {
 private:
-	ListNode<ItemType>* head;
+	ListNode<ItemType> *head;
 	int count;
 
 public:
-	LinkedList();   // Constructor
-	~LinkedList() { clear(); }  // Destructor
+	LinkedList();			   // Constructor
+	~LinkedList() { clear(); } // Destructor
 
 	// Linked list operations
 	void clear();
-	bool getEntry(int index, ItemType& returnedEntry);
+	bool getEntry(int index, ItemType &returnedEntry);
 	int getCount() const { return count; }
 	bool insertNode(ItemType);
 	bool deleteNode(ItemType);
-	bool searchList(ItemType, ItemType&);
-	void tranverseForward(void visit(ItemType&)) const;
-	void tranverseBack(void visit(ItemType&)) const;
+	bool searchList(ItemType, ItemType &);
+	void tranverseForward(void visit(ItemType &)) const;
+	void tranverseBack(void visit(ItemType &)) const;
 	bool isEmpty() const;
-
 };
 
 //**************************************************
@@ -43,7 +41,7 @@ public:
 //      by making sure that all links can be safely dereferenced and that every list
 //      (even one that contains no data elements) always has a "first" node.
 //**************************************************
-template<class ItemType>
+template <class ItemType>
 LinkedList<ItemType>::LinkedList()
 {
 	head = new ListNode<ItemType>();
@@ -57,11 +55,11 @@ LinkedList<ItemType>::LinkedList()
 // in the sorted linked list: if found, returns true
 // and copied the data in that node to the output parameter
 //**************************************************
-template<class ItemType>
-bool LinkedList<ItemType>::searchList(ItemType target, ItemType& dataOut)
+template <class ItemType>
+bool LinkedList<ItemType>::searchList(ItemType target, ItemType &dataOut)
 {
 	bool found = false;
-	ListNode<ItemType>* pCur = head->getNext();
+	ListNode<ItemType> *pCur = head->getNext();
 
 	while (pCur != head && pCur->getItem() < target)
 		pCur = pCur->getNext();
@@ -79,15 +77,15 @@ bool LinkedList<ItemType>::searchList(ItemType target, ItemType& dataOut)
 // The insertNode function inserts a new node in a
 // sorted linked list
 //**************************************************
-template<class ItemType>
+template <class ItemType>
 bool LinkedList<ItemType>::insertNode(ItemType dataIn)
 {
-	ListNode<ItemType>* newNode;
-	ListNode<ItemType>* pPre;
-	ListNode<ItemType>* pCur;
+	ListNode<ItemType> *newNode;
+	ListNode<ItemType> *pPre;
+	ListNode<ItemType> *pCur;
 
 	newNode = new ListNode<ItemType>();
-	newNode->setCity(dataIn);
+	newNode->setItem(dataIn);
 
 	pPre = head;
 	pCur = head->getNext();
@@ -101,7 +99,6 @@ bool LinkedList<ItemType>::insertNode(ItemType dataIn)
 	newNode->setBack(pPre);
 	pPre->getNext()->setBack(newNode);
 	pPre->setNext(newNode);
-
 
 	if (newNode->getNext() == head)
 	{
@@ -117,12 +114,12 @@ bool LinkedList<ItemType>::insertNode(ItemType dataIn)
 // in a sorted linked list; if found, the node is
 // deleted from the list and from memory.
 //**************************************************
-template<class ItemType>
+template <class ItemType>
 bool LinkedList<ItemType>::deleteNode(ItemType target)
 {
-	ListNode<ItemType>* pCur;
-	ListNode<ItemType>* pPre;
-	ListNode<ItemType>* pDel;
+	ListNode<ItemType> *pCur;
+	ListNode<ItemType> *pPre;
+	ListNode<ItemType> *pDel;
 	bool deleted = false;
 
 	pPre = head;
@@ -152,11 +149,11 @@ bool LinkedList<ItemType>::deleteNode(ItemType target)
 // Destructor                                      *
 // This function deletes every node in the list.   *
 //**************************************************
-template<class ItemType>
+template <class ItemType>
 void LinkedList<ItemType>::clear()
 {
-	ListNode<ItemType>* pCur;
-	ListNode<ItemType>* pNext;
+	ListNode<ItemType> *pCur;
+	ListNode<ItemType> *pNext;
 
 	pCur = head->getNext();
 	while (pCur != head)
@@ -171,14 +168,14 @@ void LinkedList<ItemType>::clear()
 }
 
 //**************************************************
-// tranverseforward is the function to tranverse 
+// tranverseforward is the function to tranverse
 // the whole list from the front of the list.
 //*************************************************
 
-template<class ItemType>
-void LinkedList<ItemType>::tranverseForward(void visit(ItemType&)) const
+template <class ItemType>
+void LinkedList<ItemType>::tranverseForward(void visit(ItemType &)) const
 {
-	ListNode<ItemType>* pWalk;
+	ListNode<ItemType> *pWalk;
 	pWalk = head->getNext();
 	while (pWalk != head)
 	{
@@ -188,17 +185,17 @@ void LinkedList<ItemType>::tranverseForward(void visit(ItemType&)) const
 	}
 	//	cout << "===== ==================== ====" << endl;
 }
-template<class ItemType>
-bool LinkedList<ItemType>::getEntry(int index, ItemType& returnedEntry)
+template <class ItemType>
+bool LinkedList<ItemType>::getEntry(int index, ItemType &returnedEntry)
 {
 	//if (index < itemCount || index >= itemCount)
 	if (index < 0 || index >= count)
 		return false;
 
-	ListNode<ItemType>* current = head;
+	ListNode<ItemType> *current = head;
 
 	for (int i = 0; i < index; i++)
-		current = current->next;
+		current = current->getNext();
 
 	returnedEntry = current->getItem();
 	return true;
@@ -207,10 +204,10 @@ bool LinkedList<ItemType>::getEntry(int index, ItemType& returnedEntry)
 // tranverseBack is the fuction to tranverse
 // the whole list from the back of the list.
 //**************************************************
-template<class ItemType>
-void LinkedList<ItemType>::tranverseBack(void visit(ItemType&)) const
+template <class ItemType>
+void LinkedList<ItemType>::tranverseBack(void visit(ItemType &)) const
 {
-	ListNode<ItemType>* pWalk;
+	ListNode<ItemType> *pWalk;
 	pWalk = head->getBack();
 	while (pWalk != head)
 	{
@@ -226,12 +223,10 @@ void LinkedList<ItemType>::tranverseBack(void visit(ItemType&)) const
 // it returns true if it's an empty list
 // false if it's not an empty list
 //**************************************************
-template<class ItemType>
+template <class ItemType>
 bool LinkedList<ItemType>::isEmpty() const
 {
 	return count == 0;
 }
 
 #endif
-
-

@@ -30,7 +30,8 @@ private:
     int trackingNumber;
 
 public:
-    Mail(int n, Address f, Address t, Date d, Type p){
+    Mail(int n, Address f, Address t, Date d, Type p)
+    {
         this->trackingNumber = n;
         this->from = f;
         this->to = t;
@@ -52,12 +53,14 @@ public:
     int getTrackingNumber() const { return trackingNumber; }
     Address getFrom() const { return from; }
     Address getTo() const { return to; }
-    Date getSent() const { return sent; }
-    Type getType() const { return this->type; }
-    string hashString(){return "" + trackingNumber;}
+    void getSent(Date &d) const { d = sent; }
+    void getType(Type &t) const { t = type; }
+    string hashString() { return "" + trackingNumber; }
 
     // Other functions
     friend ostream &operator<<(ostream &, Mail &);
+    bool operator<(const Mail &o) { return this->trackingNumber < o.trackingNumber; }
+    bool operator>(const Mail &o) { return this->trackingNumber > o.trackingNumber; }
 };
 
 ostream &operator<<(ostream &out, Mail &m)

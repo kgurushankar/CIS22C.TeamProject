@@ -1,4 +1,3 @@
-#pragma once
 #ifndef LIST_NODE_H
 #define LIST_NODE_H
 #include <cstdlib>
@@ -17,12 +16,12 @@ public:
 	//Setter
 	void setNext(ListNode* n) { next = n; }
 	void setBack(ListNode* b) { back = b; }
-	void setCity(ItemType c) { value = c; }
+	void setItem(ItemType c) { value = c; }
 
 	//Getter
 	ListNode* getNext()const { return next; }
 	ListNode* getBack()const { return back; }
-	ItemType getCity() const { return value; }
+	ItemType getItem() const { return value; }
 	
 };
 #endif

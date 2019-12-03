@@ -65,7 +65,7 @@ void HashTable<ItemType>::resize()
 
 
 	newHashTable.arraySize = 0;
-	newHashTable.hashTable = NULL;
+	newHashTable.hashList = NULL;
 	// otherwise desctructor of newHashTable will destroy rehashed data
 }
 template< class ItemType>
@@ -161,12 +161,12 @@ void HashTable<ItemType>::printHash(void visit(ItemType&))
 }
 
 template<class ItemType>
-HashTable<ItemType>::~Hash()
+HashTable<ItemType>::~HashTable()
 {
 	for (int i = 0; i < arraySize; i++)
 	{
 		cout << "DEBUG - Destructor: Now deleting index " << i << endl;
-		delete hashList[i];
+		delete (hashList+i);
 	}
 }
 template <class ItemType>

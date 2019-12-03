@@ -1,4 +1,3 @@
-#pragma once
 /** State class for storing state and perform data validation
  * author : Keshav Gurushankar
  */

@@ -19,18 +19,18 @@ private:
 	int _compare(const PriorityMail &o);
 
 public:
-	PriorityMail(Mail mail){this->m = mail;};
-	PriorityMail(){this->m=Mail();}
+	PriorityMail(Mail mail) { this->m = mail; };
+	PriorityMail() { this->m = Mail(); }
 
 	Mail getMail() { return m; }
 
 	// Other functions
 	friend ostream &operator<<(ostream &, Mail &);
 	//Comparing priority
-	bool operator<( const PriorityMail &o) { return  this->_compare(o)<0; }
-	bool operator>( const PriorityMail &o) { return  this->_compare(o)>0; }
-	bool operator==(const PriorityMail &o) { return this->_compare(o)==0; }
-	bool operator!=(const PriorityMail &o) { return this->_compare(o)!=0; }
+	bool operator<(const PriorityMail &o) { return this->_compare(o) < 0; }
+	bool operator>(const PriorityMail &o) { return this->_compare(o) > 0; }
+	bool operator==(const PriorityMail &o) { return this->_compare(o) == 0; }
+	bool operator!=(const PriorityMail &o) { return this->_compare(o) != 0; }
 };
 ostream &operator<<(ostream &out, PriorityMail &m)
 {
@@ -38,29 +38,38 @@ ostream &operator<<(ostream &out, PriorityMail &m)
 	return out;
 }
 
-int PriorityMail::_compare(const PriorityMail &o){
-	if (this->m.getType()!=o.m.getType())
+int PriorityMail::_compare(const PriorityMail &o)
+{
+	Date ts;
+	Date os;
+	this->m.getSent(ts);
+	o.m.getSent(os);
+	Type tt;
+	Type ot;
+	this->m.getType(tt);
+	o.m.getType(ot);
+	if (tt != ot)
 	{
-		if (this->m.getType()>o.m.getType()) // if i have a higher priority
+		if (tt > ot) // if i have a higher priority
 			return 1;
-		else 
+		else
 			return -1;
 	}
-	else if (this->m.getSent()!=o.m.getSent())
+	else if (ts != os)
 	{
-		if (this->m.getSent()<o.m.getSent()) //if i was sent sooner
+		if (ts < os) //if i was sent sooner
 			return 1;
-		else 
+		else
 			return -1;
 	}
-	else if (this->m.getTrackingNumber()!=o.m.getTrackingNumber()) // then use tracking number, because hopefully first tracking number went into system fist
+	else if (this->m.getTrackingNumber() != o.m.getTrackingNumber()) // then use tracking number, because hopefully first tracking number went into system fist
 	{
-		if (this->m.getTrackingNumber()<o.m.getTrackingNumber()) //if i have lower number
+		if (this->m.getTrackingNumber() < o.m.getTrackingNumber()) //if i have lower number
 			return 1;
-		else 
+		else
 			return -1;
 	}
-	else 
+	else
 		return 0;
 }
 

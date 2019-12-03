@@ -11,7 +11,18 @@
 
 using namespace std;
 
-void searchTrackingNumber(BinarySearchTree<Mail> *addressTree);
+int main();
+void searchTrackingNumber(BinarySearchTree<TrackingMail> *tree);
+void printOrder(BinarySearchTree<PriorityMail> *idTree);
+void printMail(BinarySearchTree<TrackingMail> *idTree);
+void printHash(HashTable<Mail> *table);
+void visitPriorityMail(PriorityMail &mail);
+void visitTrackingMail(TrackingMail &mail);
+void visitMail(Mail &mail);
+void buildBSTs(BinarySearchTree<PriorityMail> *priority, BinarySearchTree<TrackingMail> *tracking, HashTable<Mail> hash, char mail[], char address[]);
+void input(BinarySearchTree<PriorityMail> *priorityTree, BinarySearchTree<TrackingMail> *trackingTree, HashTable<Mail> hash);
+void printMenu();
+
 /**
 This is the best I can think of and I think we need to add setter for the tracking number and the address.
 **/
@@ -25,13 +36,48 @@ int main()
     printMenu();
 
     string choice = "";
-
-    while (choice[0] != 'E')
+    string options = "";
+    while (choice == "QUIT" || choice == "EXIT" || choice == "Q" || choice == "E")
     {
         std::cout << "Pick an option" << endl;
         getline(std::cin, choice);
-        if (choice[0] == 'T')
+        options = choice.substr(choice.find(" "));
+        choice = choice.substr(0, choice.find(" "));
+        if (choice == "READ")
+        {
+        }
+        else if (choice == "PRINT")
+        {
+        }
+        else if (choice == "SEARCH")
+        {
+        }
+        else if (choice == "MAILBOX")
+        {
+        }
+        else if (choice == "STATE")
+        {
+        }
+        else if (choice == "SEND")
+        {
+        }
+        else if (choice == "REMOVE")
+        {
+        }
+        else if (choice == "INSERT")
+        {
+        }
+        else if (choice == "CLEAR")
+        {
+        }
+        else if (choice == "QUIT" || choice == "EXIT" || choice == "Q" || choice == "E")
+        {
+        }
+        else
+        {
+        }
     }
+    return 0;
 }
 
 void searchTrackingNumber(BinarySearchTree<TrackingMail> *tree)
@@ -40,27 +86,10 @@ void searchTrackingNumber(BinarySearchTree<TrackingMail> *tree)
     std::cout << "Please enter the tracking number: ";
     std::cin >> tracking;
 
-    Mail obj = Mail(tracking, Address(), Address(), Date(), Type::normal);
-    Mail returnItem;
+    Mail obj = Mail(tracking, Address(), Address(), Date(), Type("normal"));
+    TrackingMail returnItem;
 
-    if (table->search(obj, returnItem))
-    {
-        std::cout << returnItem;
-    }
-}
-
-void searchByState(HashTable<Mail> *table)
-{
-    Mail obj;
-    Mail returnItem;
-    string stateTemp;
-
-    std::cout << "Please enter the state : ";
-    getline(std::cin, stateTemp);
-    std::cin.ignore();
-
-    obj.setState(stateTemp);
-    if (table->search(obj, returnItem))
+    if (tree->getEntry(obj, returnItem))
     {
         std::cout << returnItem;
     }
@@ -68,17 +97,27 @@ void searchByState(HashTable<Mail> *table)
 
 void printOrder(BinarySearchTree<PriorityMail> *idTree)
 {
-    idTree->inOrder(visitMail);
+    idTree->inOrder(visitPriorityMail);
 }
 
 void printMail(BinarySearchTree<TrackingMail> *idTree)
 {
-    idTree->inOrder(visitMail);
+    idTree->inOrder(visitTrackingMail);
 }
 
-void printState(HashTable<Mail> *table)
+void printHash(HashTable<Mail> *table)
 {
     table->printHash(visitMail);
+}
+
+void visitPriorityMail(PriorityMail &mail)
+{
+    std::cout << mail;
+}
+
+void visitTrackingMail(TrackingMail &mail)
+{
+    std::cout << mail;
 }
 
 void visitMail(Mail &mail)
@@ -90,7 +129,7 @@ void visitMail(Mail &mail)
  BuildBSTS: This function builds both trees and hash from input file
  input parameter: BST Tree1, BST Tree2, and array of int hash
  *****************************************************************************/
-void buildBSTs(BinarySearchTree<PriorityMail> *priority, BinarySearchTree<TrackingMail> *tracking, HashTable<Mail> hash, char[] mail, char[] address)
+void buildBSTs(BinarySearchTree<PriorityMail> *priority, BinarySearchTree<TrackingMail> *tracking, HashTable<Mail> hash, char mail[], char address[])
 {
     int id;
     int zip;
@@ -140,6 +179,7 @@ void buildBSTs(BinarySearchTree<PriorityMail> *priority, BinarySearchTree<Tracki
 input: This function allows you to insert a mail object and also checks for duplicate objects
 input parameters: BST mytree, BST mytree2, hash
 ************************************************************/
+
 void input(BinarySearchTree<PriorityMail> *priorityTree, BinarySearchTree<TrackingMail> *trackingTree, HashTable<Mail> hash)
 {
     string streetname;
