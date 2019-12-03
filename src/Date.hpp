@@ -87,14 +87,14 @@ void Date::_crunch(){
 }
 
 ostream &operator<<(ostream &out, Date &d){
- out<<d.day+1<<"/"<<d.month+1<<"/"<<d.year+1;
- return out;
+    out<<d.day+1<<"/"<<d.month+1<<"/"<<d.year+1;
+    return out;
 }
 
 Date::Date(string str){
-    s.substr(0, s.find("/")).trim()>>day;
-    s.substr(s.find("/"), s.find("/",s.find("/"))).trim()
-
+    this->day = stoi(s.substr(0, s.find("/")).trim());
+    this->month = stoi(s.substr(s.find("/"), s.find("/", s.find("/"))).trim());
+    this->year = stoi(s.substr(s.find("/",s.find("/"))).trim());
 }
 
 #endif
