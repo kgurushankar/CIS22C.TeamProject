@@ -56,8 +56,14 @@ public:
 
 ostream &operator<<(ostream &out, Address &a)
 {
+    string zipstr = std::to_string(a.zip);
+    while (zipstr.length() < 5)
+    {
+        zipstr = "0" + zipstr;
+    }
+    // cout << zipstr;
     out << a.street << std::endl
-        << a.city << " " << a.state << " " << a.zip;
+        << a.city << " " << a.state << " " << zipstr;
     return out;
 }
 #endif
