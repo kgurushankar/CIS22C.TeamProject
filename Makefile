@@ -2,10 +2,10 @@
 
 # Runners
 build: clean
-	/usr/local/Cellar/gcc/9.2.0_1/bin/g++-9 src/* -o bin/run
+	/usr/local/Cellar/gcc/9.2.0_1/bin/g++-9 src/* -o run
 
 debug: clean
-	/usr/local/Cellar/gcc/9.2.0_1/bin/g++-9 -g src/* -o bin/debug
+	/usr/local/Cellar/gcc/9.2.0_1/bin/g++-9 -g src/* -o debug
 
 run:
 	./a.out
