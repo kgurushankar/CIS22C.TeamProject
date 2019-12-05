@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <fstream>
 #include <cstring>
+#include <algorithm>
 
 #include "BinarySearchTree.h"
 #include "Hash.h"
@@ -32,7 +33,6 @@ int main()
     BinarySearchTree<TrackingMail> *trackingTree = new BinarySearchTree<TrackingMail>();
     BinarySearchTree<PriorityMail> *priorityTree = new BinarySearchTree<PriorityMail>();
 
-    //Init data structs
     printMenu();
 
     string choice = "";
@@ -49,6 +49,9 @@ int main()
         }
         else
             options = "";
+        std::for_each(choice.begin(), choice.end(), [](char &c) {
+            c = ::toupper(c);
+        });
         if (choice == "READ")
         {
             string addressFile, mailFile;
@@ -79,12 +82,25 @@ int main()
         }
         else if (choice == "SEND")
         {
-            int n = stoi(options);
+            int n;
+            try
+            {
+                n = stoi(options);
+            }
+            catch (...)
+            {
+                cout << "invalid number" << endl;
+            }
             Mail m;
             PriorityMail pm;
             TrackingMail tm;
             for (int i = 0; i < n; i++)
             {
+                if (priorityTree->isEmpty())
+                {
+                    cout << "no more mail to send" << endl;
+                    break;
+                }
                 priorityTree->getMax(pm);
                 m = pm.getMail();
                 tm = TrackingMail(m);
@@ -113,12 +129,19 @@ int main()
         }
         else if (choice == "CLEAR")
         {
-            delete hash;
-            delete trackingTree;
-            delete priorityTree;
-            hash = new HashTable<Mail>();
-            trackingTree = new BinarySearchTree<TrackingMail>();
-            priorityTree = new BinarySearchTree<PriorityMail>();
+            cout << "are you sure?(y/n)" << endl;
+            getline(cin, options);
+            if (options == "y")
+            {
+                // delete hash;
+                // delete trackingTree;
+                // delete priorityTree;
+                hash = new HashTable<Mail>();
+                trackingTree = new BinarySearchTree<TrackingMail>();
+                priorityTree = new BinarySearchTree<PriorityMail>();
+            }
+            else
+                cout << "aborted!" << endl;
         }
         else if (choice == "QUIT" || choice == "EXIT" || choice == "Q" || choice == "E")
         {
@@ -127,9 +150,13 @@ int main()
                  << "Goodbye!" << endl;
             return 0;
         }
+        else if (choice == "HELP" || choice == "H")
+        {
+            printMenu();
+        }
         else
         {
-            cout << "Bad Directive" << endl;
+            cout << "Bad Directive " << choice << endl;
         }
     }
     return 0;
@@ -345,6 +372,7 @@ void buildBSTs(BinarySearchTree<PriorityMail> *priority, BinarySearchTree<Tracki
     arr[98] = Address("2255 Hegmann Cliff McLaughlin Ways", "West Lloyd", State("NC"), 22570);
     arr[99] = Address("37105 Gabe Mission Reginald Ramp", "Lake Dayna", State("TN"), 14751);
 
+    //TODO this needs to be duplicate checked
     Mail m;
     while (inFile >> id >> from >> to >> datestr >> type)
     {
@@ -367,6 +395,7 @@ input parameters: BST mytree, BST mytree2, hash
 
 void inputManager(BinarySearchTree<PriorityMail> *priorityTree, BinarySearchTree<TrackingMail> *trackingTree, HashTable<Mail> *hash)
 {
+    string tmp;
     string streetname;
     string city;
     string state;
@@ -379,16 +408,43 @@ void inputManager(BinarySearchTree<PriorityMail> *priorityTree, BinarySearchTree
     Type t;
     State st;
     Date d;
-    std::cout << "enter a tracking num\n";
-    std::cin >> tracking;
+    while (true)
+    {
+        std::cout << "enter a tracking num\n";
+        std::getline(std::cin, tmp);
+        try
+        {
+            tracking = stoi(tmp);
+            break;
+        }
+        catch (...)
+        {
+            std::cout << "Invalid number\n";
+        }
+    }
     std::cout << "enter a street address (sender)\n";
     std::getline(std::cin, streetname);
     std::cout << "enter a city (sender)\n";
     std::getline(std::cin, city);
     std::cout << "enter a state (sender)\n";
     std::getline(std::cin, state);
-    std::cout << "enter a zip or postal code (5 digits) (sender)\n";
-    std::cin >> zip;
+    std::for_each(state.begin(), state.end(), [](char &c) {
+        c = ::toupper(c);
+    });
+    while (true)
+    {
+        std::cout << "enter a zip or postal code (5 digits) (sender)\n";
+        std::getline(std::cin, tmp);
+        try
+        {
+            zip = stoi(tmp);
+            break;
+        }
+        catch (...)
+        {
+            std::cout << "Invalid number\n";
+        }
+    }
     std::cout << "enter what type of package it is (priority, economy, normal) \n";
     std::getline(std::cin, type);
     Address sender = Address(streetname, city, State(state), zip);
@@ -398,6 +454,9 @@ void inputManager(BinarySearchTree<PriorityMail> *priorityTree, BinarySearchTree
     std::getline(std::cin, city);
     std::cout << "enter a state (recipient)\n";
     std::getline(std::cin, state);
+    std::for_each(state.begin(), state.end(), [](char &c) {
+        c = ::toupper(c);
+    });
     std::cout << "enter a zip or postal code (5 digits) (recipient)\n";
     std::cin >> zip;
     std::cout << "enter the sending month\n";

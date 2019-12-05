@@ -46,6 +46,7 @@ bool BinarySearchTree<ItemType>::insert(const ItemType &newEntry)
 {
     BinaryNode<ItemType> *newNodePtr = new BinaryNode<ItemType>(newEntry);
     this->rootPtr = _insert(this->rootPtr, newNodePtr);
+    this->count++;
     return true;
 }
 
@@ -55,6 +56,8 @@ bool BinarySearchTree<ItemType>::remove(const ItemType &target)
 {
     bool isSuccessful = false;
     this->rootPtr = _remove(this->rootPtr, target, isSuccessful);
+    if (isSuccessful)
+        this->count--;
     return isSuccessful;
 }
 
@@ -202,6 +205,8 @@ BinaryNode<ItemType> *BinarySearchTree<ItemType>::removeLeftmostNode(BinaryNode<
 template <class ItemType>
 bool BinarySearchTree<ItemType>::getMax(ItemType &anEntry)
 {
+    // if (this->count == 0)
+    //     return false;
     BinaryNode<ItemType> *nodePtr = this->rootPtr;
     while (nodePtr->getRightPtr() != 0)
     {
