@@ -1,5 +1,5 @@
 var faker = require('faker');
-const delimiter = ","
+const delimiter = "\t";
 const numRecords = process.argv[2];
 const numAddresses = process.argv[3];
 const oldestLetterYears = 2/12;// 2 months

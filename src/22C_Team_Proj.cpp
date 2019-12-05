@@ -39,7 +39,8 @@ int main()
     string options = "";
     while (true)
     {
-        std::cout << "Pick an option" << endl;
+        std::cout << endl
+                  << "Pick an option" << endl;
         std::getline(std::cin, choice);
         int tmp = choice.find(" ");
         if (string::npos != choice.find(" "))
@@ -60,6 +61,7 @@ int main()
                 mailFile = options.substr(options.find(" ") + 1);
                 addressFile = options.substr(0, options.find(" "));
                 buildBSTs(priorityTree, trackingTree, hash, mailFile, addressFile);
+                cout << "Done!" << endl;
             }
             else
             {

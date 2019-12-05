@@ -175,7 +175,9 @@ HashTable<ItemType>::~HashTable()
 {
 	for (int i = 0; i < arraySize; i++)
 	{
+#ifdef DEBUG
 		cout << "DEBUG - Destructor: Now deleting index " << i << endl;
+#endif
 		delete (hashList + i);
 	}
 }

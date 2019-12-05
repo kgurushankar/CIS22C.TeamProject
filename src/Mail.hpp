@@ -66,7 +66,7 @@ public:
 
 ostream &operator<<(ostream &out, Mail &m)
 {
-    out << "Tracking Number:" << std::endl
+    out << "Tracking Number:"
         << m.trackingNumber << std::endl
         << "From:" << std::endl
         << m.from << std::endl

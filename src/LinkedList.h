@@ -159,11 +159,15 @@ void LinkedList<ItemType>::clear()
 	while (pCur != head && pCur != 0)
 	{
 		pNext = pCur->getNext();
+#ifdef DEBUG
 		cout << "DEBUG - Destructor: Now deleting " << endl;
+#endif
 		delete pCur;
 		pCur = pNext;
 	}
+#ifdef DEBUG
 	cout << "DEBUG - Destructor: Now deleting the sentinel node: " << endl;
+#endif
 	delete head;
 }
 
