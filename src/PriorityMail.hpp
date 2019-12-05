@@ -25,16 +25,16 @@ public:
 	Mail getMail() { return m; }
 
 	// Other functions
-	friend ostream &operator<<(ostream &, Mail &);
+	friend ostream &operator<<(ostream &, PriorityMail &);
 	//Comparing priority
 	bool operator<(const PriorityMail &o) { return this->_compare(o) < 0; }
 	bool operator>(const PriorityMail &o) { return this->_compare(o) > 0; }
 	bool operator==(const PriorityMail &o) { return this->_compare(o) == 0; }
 	bool operator!=(const PriorityMail &o) { return this->_compare(o) != 0; }
 };
-ostream &operator<<(ostream &out, PriorityMail &m)
+ostream &operator<<(ostream &out, PriorityMail &pm)
 {
-	out << m;
+	out << pm.m;
 	return out;
 }
 

@@ -71,31 +71,39 @@ public:
 
 void Date::_crunch()
 {
+
+    // 41/3/2019
+    // 41/3/2019
     int daysInMonths[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     //first clean up month
     year += month / 12;
-    month %= month;
+    month = month % 12;
+
     //then prune off days
     while (day > daysInMonths[month % 12])
     {
         day -= daysInMonths[month % 12];
         month++;
     }
+    // std::cout << this->month + 1 << "/" << this->day + 1 << "/" << this->year + 1;
+
     //in case days dropped below 0 (for subtraction)
-    while (day < daysInMonths[(month + 11) % 12])
+    while (day < 0)
     {
         day += daysInMonths[(month + 11) % 12];
         month += 11;
-        month %= 12;
+        month = month % 12;
     }
+    // std::cout << this->month + 1 << "/" << this->day + 1 << "/" << this->year + 1;
+
     //then fix month again if needed
     year += month / 12;
-    month %= month;
+    month = month % 12;
 }
 
 ostream &operator<<(ostream &out, Date &d)
 {
-    out << d.day + 1 << "/" << d.month + 1 << "/" << d.year + 1;
+    out << d.month + 1 << "/" << d.day + 1 << "/" << d.year + 1;
     return out;
 }
 
