@@ -1,0 +1,25 @@
+#Enter this line by line, and you should be fine, using big dataset at first becuase it causes at least 30 collisions
+READ address.txt mail2.txt
+LIST
+PRINT
+SEARCH 22
+SEND 10
+REMOVE 100
+INSERT
+100
+006 Gleason Mission Vella Walks
+East Tomas
+PA
+59156
+economy
+7508 Mariela Harbors Cremin Place
+Lake Nelda
+KY
+12
+6
+2019
+SEARCH 100
+CLEAR
+y
+READ address.txt mail.txt
+Q

@@ -301,8 +301,10 @@ void buildBSTs(BinarySearchTree<PriorityMail> *priority, BinarySearchTree<Tracki
     {
         cout << fails << " mails were not able to be inserted due to duplicate tracking numbers" << endl;
     }
+    // cout << "there are " << hash->collisions() << " collisions in the hashtable" << endl;
     inFile.close();
     inFile2.close();
+    getline(cin, tmp); //need to get the newline off
 }
 
 /* *********************************************************
